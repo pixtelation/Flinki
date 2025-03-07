@@ -30,7 +30,6 @@ public class SignUp extends base{
     {
         this.driver=driver;
         PageFactory.initElements(driver, this);
-       
     }
 
  /////////////////////////////////////////////////////////////////////Locators////////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +57,7 @@ public class SignUp extends base{
 
 
      /////////////////////////////////////////////////////////////////////Methods////////////////////////////////////////////////////////////////////////////////////////
-    public void SignupWithoutTCfx()
+    public void SignupWithoutTCfx() //// Signup Without T&C
     {
         CMSsignupbtnEL.click();
         SignupEmailEl.click();
@@ -71,21 +70,18 @@ public class SignUp extends base{
 
    
 
-    public void SignupWithTCfx() throws Exception {
+    public void SignupWithTCfx() throws Exception {  ////Signup with T&C
         CMSsignupbtnEL.click();
         SignupEmailEl.click();
         SignupEmailEl.sendKeys(Data.randomEmail);
         System.out.println(Data.randomEmail);
         SignupTCCheckbox.click();
         SignUpbtn.click();
+         
+        ex.ExcelData();////////Store Data.randomEmail in Excel sheet
 
-         /////////////////////Store Data.randomEmail in Excel sheet
-        ex.ExcelData();
-
-
-
-         ////////////////////////////////OTP from Yopmail
-         OTPYopmail otpobj = new OTPYopmail(driver);
+         
+        OTPYopmail otpobj = new OTPYopmail(driver);////////OTP from Yopmail
          
          
 //           String originalWindow = driver.getWindowHandle();
