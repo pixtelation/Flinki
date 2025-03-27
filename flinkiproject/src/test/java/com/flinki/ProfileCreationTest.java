@@ -3,7 +3,8 @@ package com.flinki;
 import org.testng.annotations.Test;
 
 import com.flinki.Base.base;
-import com.flinki.Pages.*;
+import com.flinki.Pages.ProfileCreation;
+import com.flinki.Pages.SignUp;
 
 public class ProfileCreationTest extends base {
 
@@ -14,7 +15,7 @@ public class ProfileCreationTest extends base {
      SignUp sn = new SignUp(driver);
      ProfileCreation pf = new ProfileCreation(driver);  
      sn.SignupWithTCfx();
-     pf.PersonalInformation();
+     pf.PersonalInformation().RacesEvents().addNewraceEvent();
     }
     
 }

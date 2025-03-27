@@ -1,10 +1,8 @@
 package com.flinki.Resources;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.By;
@@ -17,7 +15,7 @@ import com.flinki.Base.base;
 
 public class OTPYopmail extends base {
    
-    public  OTPYopmail( WebDriver driver) 
+    public  OTPYopmail( WebDriver driver) throws InterruptedException 
     {
         this.driver=driver;
         PageFactory.initElements(driver, this);
@@ -45,12 +43,11 @@ public class OTPYopmail extends base {
         login.click();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        
         }
-
+        Thread.sleep(5000);
         driver.switchTo().frame("ifmail");  // Replace with the actual iframe ID or index
         WebElement otp = driver.findElement(By.xpath("//STRONG[text()]"));
         String Otp = otp.getText();
@@ -62,33 +59,25 @@ public class OTPYopmail extends base {
         driver.switchTo().window(originalWindow);
         WebElement enterOtp = driver.findElement(By.xpath("//HTML[contains(@lang,'en')]/BODY/DIV[2]/DIV/DIV[2]/DIV/DIV/DIV[2]/DIV/INPUT[1]"));
         enterOtp.click();
- 
-         // Use Robot class to paste OTP
-         Robot robot = null;
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-         robot.delay(1000); // Small delay to ensure field is focused
- 
-         // Press CTRL + V (Paste)
-         robot.keyPress(KeyEvent.VK_CONTROL);
-         robot.keyPress(KeyEvent.VK_V);
-         robot.keyRelease(KeyEvent.VK_V);
-         robot.keyRelease(KeyEvent.VK_CONTROL);
- 
-         // Press ENTER if needed
-         robot.keyPress(KeyEvent.VK_ENTER);
-         robot.keyRelease(KeyEvent.VK_ENTER);
+        Thread.sleep(3000);
+        List<WebElement> otpFields = driver.findElements(By.xpath("//input[@type='text']"));
+
+// Ensure we have enough fields to enter OTP
+if (otpFields.size() >= Otp.length()) {
+    for (int i = 0; i < Otp.length(); i++) {
+        otpFields.get(i).sendKeys(Character.toString(Otp.charAt(i)));
+    }
+} else {
+    System.out.println("Error: Not enough OTP input fields found!");
+}
+    
  
          System.out.println(Otp + ":OTP pasted successfully!");
         
          try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         WebElement AfterOTPContinue = driver.findElement(By.xpath("//button[text()='Continue']"));
