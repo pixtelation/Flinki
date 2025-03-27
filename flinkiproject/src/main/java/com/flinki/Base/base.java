@@ -16,11 +16,11 @@ public class base {
     public void Start()
     {
         
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("user-data-dir=C:/Users/wadmin/AppData/Local/Google/Chrome/User Data");
-        options.addArguments("profile-directory=Default"); // Change if using a different profile
+        //ChromeOptions options = new ChromeOptions();
+        // options.addArguments("user-data-dir=C:/Users/wadmin/AppData/Local/Google/Chrome/User Data");
+        // options.addArguments("profile-directory=Default"); // Change if using a different profile
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.get("https://sportsxcl-cms.weavers-web.com/");

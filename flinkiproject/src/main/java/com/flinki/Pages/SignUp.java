@@ -43,7 +43,7 @@ public class SignUp extends base{
     @FindBy(xpath = "//input[@id='flexCheckDefault' and @type='checkbox']")
     WebElement SignupTCCheckbox;
 
-    @FindBy(xpath = "//button[text()='Sign Up']")
+    @FindBy(xpath = "//button[text()='Sign Up / Sign In']")
     WebElement SignUpbtn;
 
     @FindBy(xpath = "//button[text()='Continue']")
