@@ -9,13 +9,20 @@ import com.flinki.Pages.SignUp;
 public class ProfileCreationTest extends base {
 
 
+    
     @Test
     public void ProfileCreation() throws Exception
     {
      SignUp sn = new SignUp(driver);
      ProfileCreation pf = new ProfileCreation(driver);  
-     sn.SignupWithTCfx();
-     pf.PersonalInformation().RacesEvents().addNewraceEvent();
+    sn.SignupWithTCfx();
+    pf.PersonalInformation();
+    Thread.sleep(3000);
+    pf.RacesEvents();
+    Thread.sleep(4000);
+    pf.addNewraceEvent();
+    Thread.sleep(4000);
+          
     }
     
 }
