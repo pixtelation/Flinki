@@ -1,20 +1,14 @@
 package com.flinki.Pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-
-import java.time.Duration;
-
 
 import com.flinki.Base.base;
 import com.flinki.Resources.Data;
 import com.flinki.Resources.ExcelUtils;
+import com.flinki.Resources.Generic;
 import com.flinki.Resources.OTPYopmail;
 
 
@@ -23,6 +17,7 @@ public class SignUp extends base{
     //public String Image = ".\src\main\java\com\flinki\Resources\Images\image.png";
 
     ExcelUtils ex = new ExcelUtils();
+    Generic signup = new Generic();
     
 
      /////////////////////////////////////////////////////////////////////Constructor////////////////////////////////////////////////////////////////////////////////////////
@@ -53,25 +48,43 @@ public class SignUp extends base{
     @FindBy(xpath = "//input[@name='myfile']")
     WebElement UploadImage;
 
+    @FindBy(xpath = "//h2[contains(text(), 'You must agree to the Privacy Policy & Terms')]")
+    private WebElement errorMessage;
 
 
 
-     /////////////////////////////////////////////////////////////////////Methods////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////Methods////////////////////////////////////////////////////////////////////////////////////////
+    public String getErrorMessage()
+    {
+        return signup.getElementText(errorMessage);
+    }
+
+    public boolean  errorMessageDisplayed()
+    {
+        signup.isElementDisplayed(errorMessage);
+        return true;
+
+    }
+    
+    
+    
     public void SignupWithoutTCfx() //// Signup Without T&C
     {
         CMSsignupbtnEL.click();
         SignupEmailEl.click();
         SignupEmailEl.sendKeys(Data.randomEmail);
         SignUpbtn.click();
-        WebDriverWait wt = new WebDriverWait(driver, Duration.ofSeconds(4));
-        WebElement toast = wt.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='p-toast-message-text']")));
-       System.out.println(toast.getText()); 
+    //     WebDriverWait wt = new WebDriverWait(driver, Duration.ofSeconds(4));
+    //     WebElement toast = wt.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='p-toast-message-text']")));
+    //    System.out.println(toast.getText()); 
     }
 
    
 
     public void SignupWithTCfx() throws Exception {  ////Signup with T&C
         CMSsignupbtnEL.click();
+        
         SignupEmailEl.click();
         SignupEmailEl.sendKeys(Data.randomEmail);
         System.out.println(Data.randomEmail);
