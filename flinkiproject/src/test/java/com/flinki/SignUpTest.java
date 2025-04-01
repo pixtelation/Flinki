@@ -1,8 +1,6 @@
 package com.flinki;
 
-import java.awt.AWTException;
-import java.io.IOException;
-
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.flinki.Base.base;
@@ -18,6 +16,9 @@ public void SignupWithoutTC()
 {
     SignUp sn = new SignUp(driver);
     sn.SignupWithoutTCfx();
+    Assert.assertTrue(sn.errorMessageDisplayed(), "Not displayed ");
+    Assert.assertEquals(sn.getErrorMessage(), "You must agree to the Privacy Policy & Terms.","Error message not matched ");
+    
 }
 
 

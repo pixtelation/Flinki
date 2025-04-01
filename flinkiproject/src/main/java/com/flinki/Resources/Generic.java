@@ -20,7 +20,8 @@
         public WebDriverWait wait;
         public Actions actions;
         public JavascriptExecutor jsExecutor;
-    
+
+      
         
         public void clickElement(WebElement element)
         {
