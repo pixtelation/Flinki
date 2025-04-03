@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -25,7 +26,7 @@ public class ProfileCreation extends base {
         SignUp su = new SignUp(driver);
         Faker faker = new Faker();
         Generic Profile = new Generic();
-        Actions actions = new Actions(driver);
+        // Actions actions = new Actions(driver);
         
       
         
@@ -83,7 +84,7 @@ public class ProfileCreation extends base {
         @FindBy(xpath="//button[normalize-space()='Add New Qualifications']")
         private WebElement addNewQulifi;
 
-        @FindBy(id = "react-select-6-placeholder")
+        @FindBy(xpath="(//div[@class='css-hlgwow'])[1]")
         private WebElement createSportsQulif;
 
         @FindBy(id = "react-select-7-placeholder")
@@ -207,68 +208,120 @@ public class ProfileCreation extends base {
     public ProfileCreation addNewQulifiactions() throws AWTException, InterruptedException
 
     {
-        Thread.sleep(2000);
-    
-    // Ensure JavaScriptExecutor is initialized
-    JavascriptExecutor js = (JavascriptExecutor) driver;
-    if (js == null) {
-        throw new RuntimeException("JavaScript Executor is not initialized properly");
+        try {
+            Thread.sleep(2000);
+
+            // Ensure JavaScriptExecutor is initialized
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            if (js == null) {
+                throw new RuntimeException("JavaScript Executor is not initialized properly");
+            }
+            js.executeScript("document.body.style.zoom='60%'");
+
+            // Click on qualification button
+            if (addNewQulifi.isDisplayed()) {
+                addNewQulifi.click();
+                System.out.println("✅ Clicked on addNewQualifi");
+            } else {
+                throw new NoSuchElementException("❌ addNewQulifi button not found.");
+            }
+            Thread.sleep(4000);
+
+            // Move to element and perform action
+            Actions actions = new Actions(driver);
+
+            if (createSportsQulif != null && createSportsQulif.isDisplayed()) {
+                actions.moveToElement(createSportsQulif).click().perform();
+                System.out.println("✅ Moved to createSportsQulif and clicked");
+            } else {
+                throw new NoSuchElementException("❌ createSportsQulif not found or not visible.");
+            }
+
+            // Use Robot class for keyboard input
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_DOWN);
+            robot.keyRelease(KeyEvent.VK_DOWN);
+            Thread.sleep(500);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+
+            // Move to another element
+            Thread.sleep(4000);
+            if (createInstitute.isDisplayed()) {
+                actions.moveToElement(createInstitute).click().perform();
+                System.out.println("✅ Moved to createInstitute and clicked");
+            } else {
+                throw new NoSuchElementException("❌ createInstitute not found.");
+            }
+
+            robot.keyPress(KeyEvent.VK_DOWN);
+            robot.keyRelease(KeyEvent.VK_DOWN);
+            Thread.sleep(500);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+
+            // Enter the date
+            if (date.isDisplayed()) {
+                date.clear();
+                date.sendKeys("27/02/2010");
+                System.out.println("✅ Entered date: 27/02/2010");
+            } else {
+                throw new NoSuchElementException("❌ Date input field not found.");
+            }
+
+            // Click Save and Next
+            if (saveUpdateButton.isDisplayed()) {
+                saveUpdateButton.click();
+                System.out.println("✅ Clicked Save Update Button");
+            } else {
+                throw new NoSuchElementException("❌ saveUpdateButton not found.");
+            }
+
+            if (nextButton.isDisplayed()) {
+                nextButton.click();
+                System.out.println("✅ Clicked Next Button");
+            } else {
+                throw new NoSuchElementException("❌ nextButton not found.");
+            }
+
+        } catch (NoSuchElementException e) {
+            System.err.println("🚨 Element Not Found: " + e.getMessage());
+        } catch (InterruptedException e) {
+            System.err.println("🚨 Thread Interrupted: " + e.getMessage());
+        } catch (AWTException e) {
+            System.err.println("🚨 Robot Class Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("🚨 Unexpected Error: " + e.getMessage());
+        }
+
+        return this;
     }
-    js.executeScript("document.body.style.zoom='60%'");
 
-    // Click on qualification button
-    addNewQulifi.click();
-    System.out.println("Clicked on addNewQualifi");
-    Thread.sleep(4000);
+    public void planToUpgrade() {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("document.body.style.zoom='60%'");
 
-    // Move to element and perform action
-   
-    Thread.sleep(4000);
-    Actions actions = new Actions(driver);
-    actions.moveToElement(createSportsQulif).click().perform();
-    System.out.println("Moved to createSportsqulifi and clicked");
+            if (checkBox.isDisplayed()) {
+                checkBox.click();
+                System.out.println("✅ Checked the plan checkbox.");
+            } else {
+                throw new NoSuchElementException("❌ Plan checkbox not found.");
+            }
 
-    // Use Robot class for keyboard input
-    Robot robot = new Robot();
-    robot.keyPress(KeyEvent.VK_DOWN);
-    robot.keyRelease(KeyEvent.VK_DOWN);
-    Thread.sleep(500);
-    robot.keyPress(KeyEvent.VK_ENTER);
-    robot.keyRelease(KeyEvent.VK_ENTER);
+            if (standradPlan.isDisplayed()) {
+                standradPlan.click();
+                System.out.println("✅ Clicked on Standard Plan.");
+            } else {
+                throw new NoSuchElementException("❌ Standard Plan option not found.");
+            }
 
-    // Move to another element
-    Thread.sleep(4000);
-    actions.moveToElement(createInstitute).click().perform();
-    System.out.println("Moved to createInstitute and clicked");
-
-    robot.keyPress(KeyEvent.VK_DOWN);
-    robot.keyRelease(KeyEvent.VK_DOWN);
-    Thread.sleep(500);
-    robot.keyPress(KeyEvent.VK_ENTER);
-    robot.keyRelease(KeyEvent.VK_ENTER);
-
-    // Enter the date
-    date.clear();
-    date.sendKeys("27/02/2010");
-    System.out.println("Entered date: 27/02/2010");
-
-    // Click Save and Next
-    saveUpdateButton.click();
-    System.out.println("Clicked Save Update Button");
-    
-    nextButton.click();
-    System.out.println("Clicked Next Button");
-
-    return this;
+        } catch (NoSuchElementException e) {
+            System.err.println("🚨 Element Not Found: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("🚨 Unexpected Error: " + e.getMessage());
+        }
     }
-    
-    public void planToUpgrade()
-    {   JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.body.style.zoom='60%'");
-        checkBox.click();
-        standradPlan.click();
 
-        
-    }
 
 }
