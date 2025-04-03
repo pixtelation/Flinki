@@ -14,7 +14,7 @@ public class ExcelUtils {
 
     public void ExcelData() throws Exception
     {
-     String filePath = ".\\src\\main\\java\\com\\flinki\\Resources\\String_fixed.xlsx";
+     String filePath = ".\\src\\main\\java\\com\\flinki\\Resources\\String.xlsx";
      Workbook workbook;
      Sheet sheet;
      int rowNum;

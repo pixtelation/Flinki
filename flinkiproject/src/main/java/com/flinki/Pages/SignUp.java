@@ -90,21 +90,21 @@ public class SignUp extends base{
         System.out.println(Data.randomEmail);
         SignupTCCheckbox.click();
         SignUpbtn.click();
-        Thread.sleep(3000);
+        Thread.sleep(7000);
 
         
         WebElement enterOtp = driver
                 .findElement(By.xpath("//HTML[contains(@lang,'en')]/BODY/DIV[2]/DIV/DIV[2]/DIV/DIV/DIV[2]/DIV/INPUT"));
         enterOtp.click();
         enterOtp.sendKeys("123456");
-        Thread.sleep(3000);
+        Thread.sleep(6000);
         
 
 
          
                 ex.ExcelData();////////Store Data.randomEmail in Excel sheet
                 WebElement AfterOTPContinue = driver.findElement(By.xpath("//button[text()='Continue']"));
-                Thread.sleep(3000);
+                Thread.sleep(6000);
                 AfterOTPContinue.click();
                 Thread.sleep(3000);
        
