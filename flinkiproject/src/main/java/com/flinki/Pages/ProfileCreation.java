@@ -25,7 +25,7 @@ public class ProfileCreation extends base {
         SignUp su = new SignUp(driver);
         Faker faker = new Faker();
         Generic Profile = new Generic();
-        
+        Actions actions = new Actions(driver);
         
       
         
