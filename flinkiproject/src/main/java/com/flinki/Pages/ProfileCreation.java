@@ -223,7 +223,7 @@ public class ProfileCreation extends base {
     // Move to element and perform action
    
     Thread.sleep(4000);
-
+    Actions actions = new Actions(driver);
     actions.moveToElement(createSportsQulif).click().perform();
     System.out.println("Moved to createSportsqulifi and clicked");
 
