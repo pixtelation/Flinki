@@ -47,7 +47,7 @@ public class OTPYopmail extends base {
         } catch (InterruptedException e) {
         
         }
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         driver.switchTo().frame("ifmail");  // Replace with the actual iframe ID or index
         WebElement otp = driver.findElement(By.xpath("//STRONG[text()]"));
         String Otp = otp.getText();
@@ -63,12 +63,12 @@ public class OTPYopmail extends base {
         List<WebElement> otpFields = driver.findElements(By.xpath("//input[@type='text']"));
 
 // Ensure we have enough fields to enter OTP
-if (otpFields.size() >= Otp.length()) {
-    for (int i = 0; i < Otp.length(); i++) {
+        if (otpFields.size() >= Otp.length()) {
+        for (int i = 0; i < Otp.length(); i++) {
         otpFields.get(i).sendKeys(Character.toString(Otp.charAt(i)));
-    }
-} else {
-    System.out.println("Error: Not enough OTP input fields found!");
+             }
+            } else {
+            System.out.println("Error: Not enough OTP input fields found!");
 }
     
  

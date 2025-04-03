@@ -1,5 +1,6 @@
 package com.flinki.Base;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -30,6 +31,8 @@ public class base {
         driver = new ChromeDriver(options);
         driver.get("https://sportsxcl-cms.weavers-web.com/");
         driver.manage().window().maximize();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.body.style.zoom='60%'");
 
     }
 

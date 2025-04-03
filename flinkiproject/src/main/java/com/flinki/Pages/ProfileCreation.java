@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -25,7 +26,8 @@ public class ProfileCreation extends base {
         Faker faker = new Faker();
         Generic Profile = new Generic();
         
-    
+        
+      
         
     
         public ProfileCreation(WebDriver driver) {
@@ -75,8 +77,32 @@ public class ProfileCreation extends base {
     
         @FindBy(xpath = "//button[normalize-space()='Save']")
         private WebElement saveButton;
-        
-    
+
+        @FindBy(id = "react-select-2-placeholder")
+        private WebElement selectTypeOfCreate;
+        @FindBy(xpath="//button[normalize-space()='Add New Qualifications']")
+        private WebElement addNewQulifi;
+
+        @FindBy(id = "react-select-6-placeholder")
+        private WebElement createSportsQulif;
+
+        @FindBy(id = "react-select-7-placeholder")
+        private WebElement createInstitute;
+        @FindBy(xpath="//input[@name='date']")
+        private WebElement date;
+        @FindBy(xpath="//textarea[@id='about']")
+        private WebElement about;
+
+        @FindBy(xpath = "//button[normalize-space()='Save & Update']")
+        private WebElement saveUpdateButton;
+
+        @FindBy(xpath = "//div[@class='jsx-faece91221e6c5e6 popup-actions-card']//input[@id='flexCheckDefault']")
+        private WebElement checkBox;
+
+        @FindBy(xpath = "//button[normalize-space()='Continue To Standard plan']")
+        private WebElement standradPlan;
+
+
     
         /////////////////////////////////////////////////////////////////////Methods////////////////////////////////////////////////////////////////////////////////////////
         public ProfileCreation PersonalInformation() throws Exception {
@@ -124,16 +150,19 @@ public class ProfileCreation extends base {
         public ProfileCreation addNewraceEvent() throws InterruptedException, AWTException
     
         {   
-            
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("document.body.style.zoom='60%'");
+    
             addNewRaceEvent.click();
             Thread.sleep(2000);
-            Robot robot = new Robot();
-            Thread.sleep(2000);
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.keyRelease(KeyEvent.VK_ENTER);
-
+             Actions actions = new Actions(driver);
+             actions.moveToElement(selectTypeOfCreate).click().perform();
+             Robot robot = new Robot();
+             robot.keyPress(KeyEvent.VK_DOWN);
+             robot.keyRelease(KeyEvent.VK_DOWN);
+             Thread.sleep(500);
+             robot.keyPress(KeyEvent.VK_ENTER);
+             robot.keyRelease(KeyEvent.VK_ENTER);
 
         startDate.sendKeys("20/03/2025");
         Thread.sleep(2000);
@@ -142,30 +171,13 @@ public class ProfileCreation extends base {
         // String imagepath = "./src/main/java/com/flinki/Resources/Images/image.png";
         // Thread.sleep(2000);
         // fileUpload.sendKeys(imagepath);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-       
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         saveButton.click();
-      
+        Thread.sleep(3000);
+        nextButton.click();
 
-        
-
-
-
-        
-        
-     
-
-        
-
-        
         
     
         return this;
-
-
-
-        
 
 
     }
@@ -186,9 +198,77 @@ public class ProfileCreation extends base {
 
         // Wait to ensure the section is fully visible
         Thread.sleep(2000);
-        
 
         return this;
+    }
+    
+
+
+    public ProfileCreation addNewQulifiactions() throws AWTException, InterruptedException
+
+    {
+        Thread.sleep(2000);
+    
+    // Ensure JavaScriptExecutor is initialized
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+    if (js == null) {
+        throw new RuntimeException("JavaScript Executor is not initialized properly");
+    }
+    js.executeScript("document.body.style.zoom='60%'");
+
+    // Click on qualification button
+    addNewQulifi.click();
+    System.out.println("Clicked on addNewQualifi");
+    Thread.sleep(4000);
+
+    // Move to element and perform action
+   
+    Thread.sleep(4000);
+
+    actions.moveToElement(createSportsQulif).click().perform();
+    System.out.println("Moved to createSportsqulifi and clicked");
+
+    // Use Robot class for keyboard input
+    Robot robot = new Robot();
+    robot.keyPress(KeyEvent.VK_DOWN);
+    robot.keyRelease(KeyEvent.VK_DOWN);
+    Thread.sleep(500);
+    robot.keyPress(KeyEvent.VK_ENTER);
+    robot.keyRelease(KeyEvent.VK_ENTER);
+
+    // Move to another element
+    Thread.sleep(4000);
+    actions.moveToElement(createInstitute).click().perform();
+    System.out.println("Moved to createInstitute and clicked");
+
+    robot.keyPress(KeyEvent.VK_DOWN);
+    robot.keyRelease(KeyEvent.VK_DOWN);
+    Thread.sleep(500);
+    robot.keyPress(KeyEvent.VK_ENTER);
+    robot.keyRelease(KeyEvent.VK_ENTER);
+
+    // Enter the date
+    date.clear();
+    date.sendKeys("27/02/2010");
+    System.out.println("Entered date: 27/02/2010");
+
+    // Click Save and Next
+    saveUpdateButton.click();
+    System.out.println("Clicked Save Update Button");
+    
+    nextButton.click();
+    System.out.println("Clicked Next Button");
+
+    return this;
+    }
+    
+    public void planToUpgrade()
+    {   JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.body.style.zoom='60%'");
+        checkBox.click();
+        standradPlan.click();
+
+        
     }
 
 }
