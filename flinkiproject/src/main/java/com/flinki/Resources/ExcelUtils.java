@@ -1,24 +1,20 @@
 package com.flinki.Resources;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class ExcelUtils {
 
     public void ExcelData() throws Exception
     {
-     String filePath = ".\\src\\main\\java\\com\\flinki\\Resources\\String.xlsx";
+     String filePath = ".\\src\\main\\java\\com\\flinki\\Resources\\String_fixed.xlsx";
      Workbook workbook;
      Sheet sheet;
      int rowNum;
