@@ -26,7 +26,6 @@ public class ProfileCreation extends base {
         Faker faker = new Faker();
         Generic Profile = new Generic();
         
-        
       
         
     
