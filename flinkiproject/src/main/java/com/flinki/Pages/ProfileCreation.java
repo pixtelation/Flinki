@@ -87,7 +87,7 @@ public class ProfileCreation extends base {
         @FindBy(xpath="(//div[@class='css-hlgwow'])[1]")
         private WebElement createSportsQulif;
 
-        @FindBy(id = "react-select-7-placeholder")
+        @FindBy(xpath = "(//div[@class='css-hlgwow'])[2]")
         private WebElement createInstitute;
         @FindBy(xpath="//input[@name='date']")
         private WebElement date;
@@ -102,6 +102,9 @@ public class ProfileCreation extends base {
 
         @FindBy(xpath = "//button[normalize-space()='Continue To Standard plan']")
         private WebElement standradPlan;
+
+        @FindBy(xpath = "//div[@class='jsx-faece91221e6c5e6 popup-actions']")
+        private WebElement popUpScroll;
 
 
     
@@ -247,7 +250,7 @@ public class ProfileCreation extends base {
 
             // Move to another element
             Thread.sleep(4000);
-            if (createInstitute.isDisplayed()) {
+            if (createInstitute.isDisplayed()&& createInstitute !=null) {
                 actions.moveToElement(createInstitute).click().perform();
                 System.out.println("✅ Moved to createInstitute and clicked");
             } else {
@@ -256,33 +259,41 @@ public class ProfileCreation extends base {
 
             robot.keyPress(KeyEvent.VK_DOWN);
             robot.keyRelease(KeyEvent.VK_DOWN);
-            Thread.sleep(500);
+            Thread.sleep(2000);
             robot.keyPress(KeyEvent.VK_ENTER);
             robot.keyRelease(KeyEvent.VK_ENTER);
-
+            Thread.sleep(2000);
             // Enter the date
-            if (date.isDisplayed()) {
-                date.clear();
+            if (date.isDisplayed()&& date!=null) {
+               
                 date.sendKeys("27/02/2010");
                 System.out.println("✅ Entered date: 27/02/2010");
             } else {
                 throw new NoSuchElementException("❌ Date input field not found.");
             }
+            Thread.sleep(2000);
 
+            if (about.isDisplayed() && about != null)
+            {
+                about.clear();
+                about.sendKeys("Lorem  Lorem");
+            }
             // Click Save and Next
-            if (saveUpdateButton.isDisplayed()) {
+            if (saveUpdateButton.isDisplayed()&& saveUpdateButton!=null) {
                 saveUpdateButton.click();
+                Thread.sleep(5000);
                 System.out.println("✅ Clicked Save Update Button");
             } else {
                 throw new NoSuchElementException("❌ saveUpdateButton not found.");
             }
-
+            Thread.sleep(2000);
             if (nextButton.isDisplayed()) {
                 nextButton.click();
                 System.out.println("✅ Clicked Next Button");
             } else {
                 throw new NoSuchElementException("❌ nextButton not found.");
             }
+            Thread.sleep(3000);
 
         } catch (NoSuchElementException e) {
             System.err.println("🚨 Element Not Found: " + e.getMessage());
@@ -299,8 +310,12 @@ public class ProfileCreation extends base {
 
     public void planToUpgrade() {
         try {
+
+
+            //div[@class='jsx-faece91221e6c5e6 popup-actions']
             JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("document.body.style.zoom='60%'");
+            js.executeScript("arguments[0].scrollBy(0, 200);", popUpScroll);
+            Thread.sleep(2000);
 
             if (checkBox.isDisplayed()) {
                 checkBox.click();
