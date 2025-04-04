@@ -82,9 +82,9 @@ public class SignUp extends base{
 
    
 
-    public void SignupWithTCfx() throws Exception {  ////Signup with T&C
+    public ProfileCreation SignupWithTCfx() throws Exception { ////Signup with T&C
         CMSsignupbtnEL.click();
-        
+
         SignupEmailEl.click();
         SignupEmailEl.sendKeys(Data.randomEmail);
         System.out.println(Data.randomEmail);
@@ -92,30 +92,47 @@ public class SignUp extends base{
         SignUpbtn.click();
         Thread.sleep(7000);
 
-        
         WebElement enterOtp = driver
                 .findElement(By.xpath("//HTML[contains(@lang,'en')]/BODY/DIV[2]/DIV/DIV[2]/DIV/DIV/DIV[2]/DIV/INPUT"));
         enterOtp.click();
         enterOtp.sendKeys("123456");
         Thread.sleep(6000);
-        
 
+        ex.ExcelData();////////Store Data.randomEmail in Excel sheet
+        WebElement AfterOTPContinue = driver.findElement(By.xpath("//button[text()='Continue']"));
+        Thread.sleep(6000);
+        AfterOTPContinue.click();
+        Thread.sleep(3000);
 
-         
-                ex.ExcelData();////////Store Data.randomEmail in Excel sheet
-                WebElement AfterOTPContinue = driver.findElement(By.xpath("//button[text()='Continue']"));
-                Thread.sleep(6000);
-                AfterOTPContinue.click();
-                Thread.sleep(3000);
-       
-       
-         
-
+        return new ProfileCreation(driver);
 
         //  OTPYopmail otpobj = new OTPYopmail(driver);////////OTP from Yopmail
-         
-  
-       
+
+    }
+    
+    public Homepage SignIn() throws InterruptedException
+    {
+        CMSsignupbtnEL.click();
+        SignupEmailEl.click();
+        SignupEmailEl.sendKeys("sahabaj@yopmail.com");
+        SignupTCCheckbox.click();
+        SignUpbtn.click();
+        Thread.sleep(7000);
+
+        WebElement enterOtp = driver
+                .findElement(By.xpath("//HTML[contains(@lang,'en')]/BODY/DIV[2]/DIV/DIV[2]/DIV/DIV/DIV[2]/DIV/INPUT"));
+        enterOtp.click();
+        enterOtp.sendKeys("123456");
+        Thread.sleep(6000);
+
+        
+        WebElement AfterOTPContinue = driver.findElement(By.xpath("//button[text()='Continue']"));
+        Thread.sleep(6000);
+        AfterOTPContinue.click();
+        Thread.sleep(3000);
+
+        return new Homepage(driver);
+
     }
 
 

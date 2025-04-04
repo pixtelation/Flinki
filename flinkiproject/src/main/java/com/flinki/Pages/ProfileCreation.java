@@ -109,7 +109,7 @@ public class ProfileCreation extends base {
 
     
         /////////////////////////////////////////////////////////////////////Methods////////////////////////////////////////////////////////////////////////////////////////
-        public ProfileCreation PersonalInformation() throws Exception {
+        public ProfileCreation CreatePersonalInformation() throws Exception {
             // su.SignupWithTCfx();///////Signup function is processsed
             FirstName.sendKeys(faker.name().firstName());
             LastName.sendKeys(faker.name().lastName());
@@ -123,12 +123,13 @@ public class ProfileCreation extends base {
             selectcountry.selectByIndex(randomIndex);
             datOfBirth.sendKeys("27/02/2010");
             saveNextButton.click();
+            Thread.sleep(3000);
             return this;
-    
+            
         }
     
         /*---------------------------------------------------------RACE  & EVENTS------------------------------------------------------------------------- */
-        public ProfileCreation RacesEvents()
+        public ProfileCreation CreateRacesEvents() throws InterruptedException
     
         {
     
@@ -144,6 +145,7 @@ public class ProfileCreation extends base {
             }
     
             SaveNextButton.click();
+            Thread.sleep(3000);
             return this;
         }
                 
@@ -151,7 +153,7 @@ public class ProfileCreation extends base {
         
         /*-----------------------------ADD NEW RACE EVENT [If user click  this button ]--------------------------- */
     
-        public ProfileCreation addNewraceEvent() throws InterruptedException, AWTException
+        public ProfileCreation CreateAddNewraceEvent() throws InterruptedException, AWTException
     
         {   
             JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -180,7 +182,7 @@ public class ProfileCreation extends base {
         nextButton.click();
 
         
-    
+        Thread.sleep(4000);
         return this;
 
 
@@ -201,14 +203,14 @@ public class ProfileCreation extends base {
         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", standardPlanSection);
 
         // Wait to ensure the section is fully visible
-        Thread.sleep(2000);
+        Thread.sleep(4000);
 
         return this;
     }
     
 
 
-    public ProfileCreation addNewQulifiactions() throws AWTException, InterruptedException
+    public ProfileCreation CreateAddNewQulifiactions() throws AWTException, InterruptedException
 
     {
         try {
@@ -224,9 +226,9 @@ public class ProfileCreation extends base {
             // Click on qualification button
             if (addNewQulifi.isDisplayed()) {
                 addNewQulifi.click();
-                System.out.println("✅ Clicked on addNewQualifi");
+                System.out.println(" Clicked on addNewQualifi");
             } else {
-                throw new NoSuchElementException("❌ addNewQulifi button not found.");
+                throw new NoSuchElementException(" addNewQulifi button not found.");
             }
             Thread.sleep(4000);
 
@@ -235,9 +237,9 @@ public class ProfileCreation extends base {
 
             if (createSportsQulif != null && createSportsQulif.isDisplayed()) {
                 actions.moveToElement(createSportsQulif).click().perform();
-                System.out.println("✅ Moved to createSportsQulif and clicked");
+                System.out.println(" Moved to createSportsQulif and clicked");
             } else {
-                throw new NoSuchElementException("❌ createSportsQulif not found or not visible.");
+                throw new NoSuchElementException(" createSportsQulif not found or not visible.");
             }
 
             // Use Robot class for keyboard input
@@ -252,9 +254,9 @@ public class ProfileCreation extends base {
             Thread.sleep(4000);
             if (createInstitute.isDisplayed()&& createInstitute !=null) {
                 actions.moveToElement(createInstitute).click().perform();
-                System.out.println("✅ Moved to createInstitute and clicked");
+                System.out.println(" Moved to createInstitute and clicked");
             } else {
-                throw new NoSuchElementException("❌ createInstitute not found.");
+                throw new NoSuchElementException(" createInstitute not found.");
             }
 
             robot.keyPress(KeyEvent.VK_DOWN);
@@ -267,9 +269,9 @@ public class ProfileCreation extends base {
             if (date.isDisplayed()&& date!=null) {
                
                 date.sendKeys("27/02/2010");
-                System.out.println("✅ Entered date: 27/02/2010");
+                System.out.println(" Entered date: 27/02/2010");
             } else {
-                throw new NoSuchElementException("❌ Date input field not found.");
+                throw new NoSuchElementException(" Date input field not found.");
             }
             Thread.sleep(2000);
 
@@ -282,33 +284,33 @@ public class ProfileCreation extends base {
             if (saveUpdateButton.isDisplayed()&& saveUpdateButton!=null) {
                 saveUpdateButton.click();
                 Thread.sleep(5000);
-                System.out.println("✅ Clicked Save Update Button");
+                System.out.println(" Clicked Save Update Button");
             } else {
-                throw new NoSuchElementException("❌ saveUpdateButton not found.");
+                throw new NoSuchElementException(" saveUpdateButton not found.");
             }
             Thread.sleep(2000);
             if (nextButton.isDisplayed()) {
                 nextButton.click();
-                System.out.println("✅ Clicked Next Button");
+                System.out.println(" Clicked Next Button");
             } else {
-                throw new NoSuchElementException("❌ nextButton not found.");
+                throw new NoSuchElementException(" nextButton not found.");
             }
             Thread.sleep(3000);
 
         } catch (NoSuchElementException e) {
-            System.err.println("🚨 Element Not Found: " + e.getMessage());
+            System.err.println(" Element Not Found: " + e.getMessage());
         } catch (InterruptedException e) {
-            System.err.println("🚨 Thread Interrupted: " + e.getMessage());
+            System.err.println(" Thread Interrupted: " + e.getMessage());
         } catch (AWTException e) {
-            System.err.println("🚨 Robot Class Error: " + e.getMessage());
+            System.err.println(" Robot Class Error: " + e.getMessage());
         } catch (Exception e) {
-            System.err.println("🚨 Unexpected Error: " + e.getMessage());
+            System.err.println(" Unexpected Error: " + e.getMessage());
         }
-
+        Thread.sleep(4000);
         return this;
     }
 
-    public void planToUpgrade() {
+    public ProfileCreation ClickplanToUpgrade() throws InterruptedException {
         try {
 
 
@@ -319,16 +321,16 @@ public class ProfileCreation extends base {
 
             if (checkBox.isDisplayed()) {
                 checkBox.click();
-                System.out.println("✅ Checked the plan checkbox.");
+                System.out.println(" Checked the plan checkbox.");
             } else {
-                throw new NoSuchElementException("❌ Plan checkbox not found.");
+                throw new NoSuchElementException(" Plan checkbox not found.");
             }
 
             if (standradPlan.isDisplayed()) {
                 standradPlan.click();
-                System.out.println("✅ Clicked on Standard Plan.");
+                System.out.println(" Clicked on Standard Plan.");
             } else {
-                throw new NoSuchElementException("❌ Standard Plan option not found.");
+                throw new NoSuchElementException(" Standard Plan option not found.");
             }
 
         } catch (NoSuchElementException e) {
@@ -336,6 +338,8 @@ public class ProfileCreation extends base {
         } catch (Exception e) {
             System.err.println("🚨 Unexpected Error: " + e.getMessage());
         }
+        Thread.sleep(4000);
+        return this;
     }
 
 
