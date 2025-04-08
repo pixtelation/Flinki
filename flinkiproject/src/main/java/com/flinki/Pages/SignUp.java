@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.flinki.Base.base;
+import com.flinki.Base.configReader;
 import com.flinki.Resources.Data;
 import com.flinki.Resources.ExcelUtils;
 import com.flinki.Resources.Generic;
@@ -114,7 +115,7 @@ public class SignUp extends base{
     {
         CMSsignupbtnEL.click();
         SignupEmailEl.click();
-        SignupEmailEl.sendKeys("sahabaj@yopmail.com");
+        SignupEmailEl.sendKeys(configReader.getProperty("email"));
         SignupTCCheckbox.click();
         SignUpbtn.click();
         Thread.sleep(7000);
