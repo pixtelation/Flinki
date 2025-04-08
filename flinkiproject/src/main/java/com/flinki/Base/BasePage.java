@@ -1,5 +1,6 @@
 package com.flinki.Base;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
@@ -137,9 +138,33 @@ public class BasePage {
     }
 
     public void scrollToBottom() {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-	}
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+    
+
+
+
+    public void uploadImage(WebElement inputElement, String fileName) {
+        try {
+            String projectPath = System.getProperty("user.dir");
+            String fullPath = projectPath + "/src/main/Resources/Images/" + fileName;
+            File file = new File(fullPath);
+    
+            if (!file.exists()) {
+                System.out.println("❌ File not found: " + fullPath);
+                return;
+            }
+    
+            inputElement.sendKeys(file.getAbsolutePath());
+            Thread.sleep(2000); // Wait for upload if needed
+            System.out.println("✅ Image uploaded successfully: " + fileName);
+    
+        } catch (Exception e) {
+            System.out.println("❌ Failed to upload image (" + fileName + "): " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
     
     
 

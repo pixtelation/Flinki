@@ -3,6 +3,8 @@ package com.flinki.Pages;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 
@@ -23,8 +25,10 @@ public class ProfilePage extends BasePage {
     
     @FindBy(xpath = "//input[@id='cover-upload']")
     private WebElement coverPhoto;
+    @FindBy(xpath = "//input[@id='profile-upload']")
+    private WebElement profilePhoto;
 
-    @FindBy(xpath = "//div[contains(@class, 'Toastify__toast--success')]//div[contains(text(), 'cover image updated successfully')]")
+    @FindBy(xpath="//div[@id='3']")
     private WebElement coverPhotoUploadSucessMessage;
 
     @FindBy(xpath = "//button[normalize-space()='Edit']")
@@ -71,6 +75,11 @@ public class ProfilePage extends BasePage {
 public String getUserSaveSucessMessage()
 {
     return getElementText(userSaveSucessfully);
+}
+
+public String getCoverPhotoSucessMessage()
+{
+    return getElementText(coverPhotoUploadSucessMessage);
 }
 
 public ProfilePage clickEditButton()
@@ -166,18 +175,7 @@ public ProfilePage editPersonalSportsInformation() throws AWTException, Interrup
     return this;
 }
 
-// Upload cover photo in profile section
-    public ProfilePage uploadCoverPhoto() {
-        String imagePath = Paths.get(System.getProperty("user.dir"), "src", "main", "java", "com", "flinki",
-                "Resources", "Images", "image.png").toAbsolutePath().toString();
-        enterText(coverPhoto, imagePath);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return this;
-    }
+
 
     public String getSucessCoverPhotoUploadMessage() {
         return getElementText(coverPhotoUploadSucessMessage);
@@ -197,6 +195,39 @@ public ProfilePage editPersonalSportsInformation() throws AWTException, Interrup
 
     }
 
+    public void uploadCoverPhoto() {
+        try {
+            Path path = Paths.get("src/main/resources/Images/coverPhoto.png").toAbsolutePath();
+            File file = path.toFile();
 
+            if (!file.exists()) {
+                System.out.println("Cover photo file not found: " + file.getAbsolutePath());
+                return;
+            }
+
+            coverPhoto.sendKeys(file.getAbsolutePath());
+            Thread.sleep(2000);
+            System.out.println("Cover photo uploaded successfully.");
+
+        } catch (Exception e) {
+            System.out.println("Failed to upload cover photo: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+    public void coverImageUpload()
+    {
+        uploadImage(coverPhoto, "dodgeCoverPhoto.jpg");
+
+    }
+
+    public void profileImageUpload()
+    {
+        uploadImage(profilePhoto, "Profile.jpg");
+    }
+
+    
+
+    
 
 }

@@ -4,16 +4,24 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 import io.github.bonigarcia.wdm.WebDriverManager; 
 
 public class base {
-   public WebDriver driver;
+   
+   
+    protected static WebDriver driver;
 
-    @SuppressWarnings("deprecation")
-    @BeforeClass
+    public static WebDriver getDriver() {
+        return driver;
+    }
+
+
+
+    // @SuppressWarnings("deprecation")
+    @BeforeMethod
     public void Start()
     {
 
@@ -37,7 +45,7 @@ public class base {
     }
 
 
-    @AfterClass
+    @AfterMethod
     public void tearDown() {
         if (driver != null) {
             driver.quit();
