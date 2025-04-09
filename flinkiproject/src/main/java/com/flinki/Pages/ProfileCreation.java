@@ -16,6 +16,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import com.flinki.Base.BasePage;
 import com.flinki.Base.base;
 import com.flinki.utils.Generic;
 import com.github.javafaker.Faker;
@@ -27,6 +28,7 @@ public class ProfileCreation extends base {
         Faker faker = new Faker();
         Generic Profile = new Generic();
         // Actions actions = new Actions(driver);
+        BasePage bs = new BasePage(driver);
         
       
         
@@ -121,7 +123,10 @@ public class ProfileCreation extends base {
             Random rand = new Random();
             int randomIndex = rand.nextInt(optionsCountry.size() - 1) + 1; // Avoid index 0 if it's a placeholder
             selectcountry.selectByIndex(randomIndex);
-            datOfBirth.sendKeys("27/02/2010");
+            // datOfBirth.sendKeys("27/02/2010");
+            Thread.sleep(1000);
+            datOfBirth.sendKeys(bs.generateRandomDOB(18, 50));
+
             saveNextButton.click();
             Thread.sleep(3000);
             return this;
