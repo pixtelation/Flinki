@@ -8,9 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.flinki.Base.base;
 import com.flinki.Base.configReader;
-import com.flinki.Resources.Data;
-import com.flinki.Resources.ExcelUtils;
-import com.flinki.Resources.Generic;
+import com.flinki.utils.Data;
+import com.flinki.utils.ExcelUtils;
+import com.flinki.utils.Generic;
 
 
 public class SignUp extends base{

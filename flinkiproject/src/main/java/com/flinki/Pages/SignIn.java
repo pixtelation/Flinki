@@ -3,27 +3,35 @@ package com.flinki.Pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import com.flinki.Base.base;
+import com.flinki.Base.BasePage;
 
-public class SignIn extends base{
+public class SignIn extends BasePage{
    
 
     public SignIn(WebDriver driver)
     {
-      this.driver=driver;
-      PageFactory.initElements(driver, this);
+      super(driver);
     }
 
 
     @FindBy(xpath = "//a[@class='btn line-btn']")
     WebElement signinbtn;
 
+    @FindBy(xpath = "//h2[normalize-space()='Welcome']")
+    WebElement welcomeText;
+
+
 
     public void SignInfx()
     {
       signinbtn.click();
+    }
+
+    public String getWelComeText()
+    {
+       return getElementText(welcomeText);
+      
     }
     
 }

@@ -150,21 +150,27 @@ public class BasePage {
             String projectPath = System.getProperty("user.dir");
             String fullPath = projectPath + "/src/main/Resources/Images/" + fileName;
             File file = new File(fullPath);
-    
+
             if (!file.exists()) {
-                System.out.println("❌ File not found: " + fullPath);
+                System.out.println(" File not found: " + fullPath);
                 return;
             }
-    
+
             inputElement.sendKeys(file.getAbsolutePath());
             Thread.sleep(2000); // Wait for upload if needed
-            System.out.println("✅ Image uploaded successfully: " + fileName);
-    
+            System.out.println(" Image uploaded successfully: " + fileName);
+
         } catch (Exception e) {
-            System.out.println("❌ Failed to upload image (" + fileName + "): " + e.getMessage());
+            System.out.println(" Failed to upload image (" + fileName + "): " + e.getMessage());
             e.printStackTrace();
         }
     }
+    
+    public void waitForPageLoad() {
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+            webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+    }
+    
     
     
 

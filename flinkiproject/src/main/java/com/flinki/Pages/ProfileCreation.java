@@ -17,7 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 import com.flinki.Base.base;
-import com.flinki.Resources.Generic;
+import com.flinki.utils.Generic;
 import com.github.javafaker.Faker;
 
 
