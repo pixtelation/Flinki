@@ -99,7 +99,7 @@ public class SignUp extends base{
         enterOtp.sendKeys("123456");
         Thread.sleep(6000);
 
-        ex.ExcelData();////////Store Data.randomEmail in Excel sheet
+        // ex.ExcelData();////////Store Data.randomEmail in Excel sheet
         WebElement AfterOTPContinue = driver.findElement(By.xpath("//button[text()='Continue']"));
         Thread.sleep(6000);
         AfterOTPContinue.click();

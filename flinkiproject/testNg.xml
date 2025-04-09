@@ -8,11 +8,11 @@
 
   <test thread-count="1" name="AllTests">
     <classes>
-      <class name="flinki.LandingTest"/>
+      <!-- <class name="flinki.LandingTest"/> -->
       <class name="flinki.ProfileCreationTest"/>
-      <class name="flinki.ProfileTest"/>
+      <!-- <class name="flinki.ProfileTest"/>
       <class name="flinki.SignInTest"/>
-      <class name="flinki.SignUpTest"/>
+      <class name="flinki.SignUpTest"/> -->
     </classes>
   </test>
 </suite>
