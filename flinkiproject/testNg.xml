@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-
 <suite name="Suite">
-    <test thread-count="5" name="AdminTests">
-        <classes>
-          
-            <class name="flinki.ProfileCreationTest"/>
-          
-        </classes>
-    </test>
+
+  <listeners>
+    <listener class-name="com.flinki.TestListener"/>
+  </listeners>
+
+  <test thread-count="1" name="AllTests">
+    <classes>
+      <class name="flinki.LandingTest"/>
+      <class name="flinki.ProfileCreationTest"/>
+      <class name="flinki.ProfileTest"/>
+      <class name="flinki.SignInTest"/>
+      <class name="flinki.SignUpTest"/>
+    </classes>
+  </test>
 </suite>
