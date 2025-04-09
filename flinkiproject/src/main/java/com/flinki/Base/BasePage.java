@@ -1,7 +1,11 @@
 package com.flinki.Base;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -14,6 +18,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.github.javafaker.Faker;
 
 public class BasePage {
      public  WebDriver driver;
@@ -168,10 +174,40 @@ public class BasePage {
     
     public void waitForPageLoad() {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(
-            webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+                webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState")
+                        .equals("complete"));
+    }
+    
+
+    
+          private static final Faker faker = new Faker();
+    
+    public static String generateRandomDOB(int minAge, int maxAge) {
+        if (minAge > maxAge) {
+            throw new IllegalArgumentException("minAge should be less than maxAge");
+        }
+
+        // Calculate date ranges
+        LocalDate toDate = LocalDate.now().minusYears(minAge); // youngest allowed
+        LocalDate fromDate = LocalDate.now().minusYears(maxAge); // oldest allowed
+
+        // Convert to java.util.Date
+        Date from = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date to = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        // Generate random date between from and to
+        Date randomDate = faker.date().between(from, to);
+
+        // Format to dd/MM/yyyy
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(randomDate);
+    }
+
+
+    
+
     }
     
     
     
 
-}
