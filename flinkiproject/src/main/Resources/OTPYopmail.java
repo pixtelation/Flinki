@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.flinki.Base.base;
+import com.flinki.utils.Data;
 
 public class OTPYopmail extends base {
    

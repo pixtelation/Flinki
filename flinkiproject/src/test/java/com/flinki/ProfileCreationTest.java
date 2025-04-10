@@ -3,6 +3,7 @@ package com.flinki;
 import java.awt.AWTException;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.flinki.Base.base;
@@ -10,6 +11,7 @@ import com.flinki.Pages.ProfileCreation;
 import com.flinki.Pages.ProfilePage;
 import com.flinki.Pages.SignUp;
 
+@Listeners(TestListener.class)
 public class ProfileCreationTest extends base {
     private SignUp signup;
     private ProfileCreation profilecreation;
@@ -27,13 +29,6 @@ public void testSetup()
 }
 
 
-
-
-
-
-
-
-
     @Test(priority=1)
     public void VerifyUserCanCreateProfileCreation() throws Exception
     {
@@ -41,7 +36,9 @@ public void testSetup()
         signup.SignupWithTCfx();
         profilecreation.CreatePersonalInformation();
         profilecreation.CreateRacesEvents();
-        profilecreation.CreateAddNewraceEvent().CreateAddNewQulifiactions().ClickplanToUpgrade(); 
+        profilecreation.CreateAddNewraceEvent();
+        profilecreation.CreateAddNewQulifiactions();
+        profilecreation.ClickplanToUpgrade();
     }
 
     @Test(priority = 2)

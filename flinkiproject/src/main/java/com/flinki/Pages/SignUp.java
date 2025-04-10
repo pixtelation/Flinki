@@ -6,11 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.flinki.Base.BasePage;
 import com.flinki.Base.base;
 import com.flinki.Base.configReader;
 import com.flinki.utils.Data;
 import com.flinki.utils.ExcelUtils;
-import com.flinki.utils.Generic;
 
 
 public class SignUp extends base{
@@ -18,7 +18,8 @@ public class SignUp extends base{
     //public String Image = ".\src\main\java\com\flinki\Resources\Images\image.png";
 
     ExcelUtils ex = new ExcelUtils();
-    Generic signup = new Generic();
+    BasePage bs = new BasePage(driver);
+   
     
 
      /////////////////////////////////////////////////////////////////////Constructor////////////////////////////////////////////////////////////////////////////////////////
@@ -58,12 +59,12 @@ public class SignUp extends base{
     /////////////////////////////////////////////////////////////////////Methods////////////////////////////////////////////////////////////////////////////////////////
     public String getErrorMessage()
     {
-        return signup.getElementText(errorMessage);
+        return bs.getElementText(errorMessage);
     }
 
     public boolean  errorMessageDisplayed()
     {
-        signup.isElementDisplayed(errorMessage);
+        bs.isElementDisplayed(errorMessage);
         return true;
 
     }
@@ -91,17 +92,17 @@ public class SignUp extends base{
         System.out.println(Data.randomEmail);
         SignupTCCheckbox.click();
         SignUpbtn.click();
-        Thread.sleep(7000);
+        Thread.sleep(5000);
 
         WebElement enterOtp = driver
                 .findElement(By.xpath("//HTML[contains(@lang,'en')]/BODY/DIV[2]/DIV/DIV[2]/DIV/DIV/DIV[2]/DIV/INPUT"));
         enterOtp.click();
         enterOtp.sendKeys("123456");
-        Thread.sleep(6000);
+        Thread.sleep(3000);
 
         // ex.ExcelData();////////Store Data.randomEmail in Excel sheet
         WebElement AfterOTPContinue = driver.findElement(By.xpath("//button[text()='Continue']"));
-        Thread.sleep(6000);
+        Thread.sleep(3000);
         AfterOTPContinue.click();
         Thread.sleep(3000);
 
@@ -118,19 +119,19 @@ public class SignUp extends base{
         SignupEmailEl.sendKeys(configReader.getProperty("email"));
         SignupTCCheckbox.click();
         SignUpbtn.click();
-        Thread.sleep(7000);
+        Thread.sleep(2000);
 
         WebElement enterOtp = driver
                 .findElement(By.xpath("//HTML[contains(@lang,'en')]/BODY/DIV[2]/DIV/DIV[2]/DIV/DIV/DIV[2]/DIV/INPUT"));
         enterOtp.click();
         enterOtp.sendKeys("123456");
-        Thread.sleep(6000);
+        Thread.sleep(2000);
 
         
         WebElement AfterOTPContinue = driver.findElement(By.xpath("//button[text()='Continue']"));
-        Thread.sleep(6000);
+        Thread.sleep(2000);
         AfterOTPContinue.click();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         return new Homepage(driver);
 

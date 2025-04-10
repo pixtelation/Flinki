@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -18,21 +19,18 @@ import org.openqa.selenium.support.ui.Select;
 
 import com.flinki.Base.BasePage;
 import com.flinki.Base.base;
-import com.flinki.utils.Generic;
+import com.flinki.utils.Log;
 import com.github.javafaker.Faker;
 
 
 public class ProfileCreation extends base {
+    private static final Logger logger = Log.getLogger(ProfileCreation.class); 
     // Removed incorrect KeyEvent declaration
         SignUp su = new SignUp(driver);
         Faker faker = new Faker();
-        Generic Profile = new Generic();
+      
         // Actions actions = new Actions(driver);
         BasePage bs = new BasePage(driver);
-        
-      
-        
-    
         public ProfileCreation(WebDriver driver) {
             this.driver = driver;
             PageFactory.initElements(driver, this);
@@ -75,8 +73,8 @@ public class ProfileCreation extends base {
         @FindBy(xpath = "//input[@placeholder='End date']")
         private WebElement endDate;
     
-        @FindBy(xpath = "//input[@type='file']")
-        private WebElement fileUpload;
+        @FindBy(xpath = "//input[@name='myfile']")
+        private WebElement uploadPhoto;
     
         @FindBy(xpath = "//button[normalize-space()='Save']")
         private WebElement saveButton;
@@ -113,9 +111,14 @@ public class ProfileCreation extends base {
         /////////////////////////////////////////////////////////////////////Methods////////////////////////////////////////////////////////////////////////////////////////
         public ProfileCreation CreatePersonalInformation() throws Exception {
             // su.SignupWithTCfx();///////Signup function is processsed
+            logger.info("Nevigate to Profile Creation page ");
+            bs.uploadImage(uploadPhoto, "Dodge car.jpg");
+            logger.info("Upload Profile Photo ");
             FirstName.sendKeys(faker.name().firstName());
+            logger.info("Enter First Random Name ");
             LastName.sendKeys(faker.name().lastName());
-            Thread.sleep(3000);
+            logger.info("Enter Last Random  Name ");
+            Thread.sleep(1000);
             ////////Country dropdown
             Select selectcountry = new Select(Country);
             List<WebElement> optionsCountry = selectcountry.getOptions();
@@ -123,11 +126,13 @@ public class ProfileCreation extends base {
             Random rand = new Random();
             int randomIndex = rand.nextInt(optionsCountry.size() - 1) + 1; // Avoid index 0 if it's a placeholder
             selectcountry.selectByIndex(randomIndex);
+            logger.info("Select Random Country ");
             // datOfBirth.sendKeys("27/02/2010");
             Thread.sleep(1000);
-            datOfBirth.sendKeys(bs.generateRandomDOB(18, 50));
-
+            datOfBirth.sendKeys(bs.generateRandomDOB(13, 50));
+            logger.info("Enter Date of Birth ");
             saveNextButton.click();
+            logger.info("Enter Next Buton ");
             Thread.sleep(3000);
             return this;
             
@@ -137,35 +142,48 @@ public class ProfileCreation extends base {
         public ProfileCreation CreateRacesEvents() throws InterruptedException
     
         {
-    
-            System.out.println("Available sports: " + sportsIntersted.size());
-    
-            Random rand = new Random();
-    
-            for (int i = 0; i < 4; i++) {
-                int randomIndex = rand.nextInt(sportsIntersted.size()); // Pick a random index
-                WebElement sport = sportsIntersted.get(randomIndex);
-                sport.click(); // Click the random sport
-                sportsIntersted.remove(randomIndex); // Remove to avoid duplicate clicks
-            }
-    
-            SaveNextButton.click();
             Thread.sleep(3000);
-            return this;
-        }
+            int totalSports = sportsIntersted.size();
+            logger.info("Total Available Sports" + totalSports);
+
+                 if (totalSports == 0) {
+                     logger.warn("No Sports Found " + totalSports);
+                 return this;
+                     }
+
+    // Limit the number of selections to available options
+            int maxToSelect = Math.min(4, totalSports);
+             Random rand = new Random();
+
+             for (int i = 0; i < maxToSelect; i++) {
+             int randomIndex = rand.nextInt(sportsIntersted.size()); // Safe now
+              WebElement sport = sportsIntersted.get(randomIndex);
+              sport.click(); // Click the random sport
+              logger.info("Chouse Sports ");
+            sportsIntersted.remove(randomIndex); // Remove to avoid duplicate clicks
+    }
+
+    SaveNextButton.click();
+    logger.info("Click Save & Next Button");
+    Thread.sleep(3000);
+    return this;
+
+
+    }
                 
     
         
         /*-----------------------------ADD NEW RACE EVENT [If user click  this button ]--------------------------- */
     
-        public ProfileCreation CreateAddNewraceEvent() throws InterruptedException, AWTException
+        public void  CreateAddNewraceEvent() throws InterruptedException, AWTException
     
         {   
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("document.body.style.zoom='60%'");
-    
+            // JavascriptExecutor js = (JavascriptExecutor) driver;
+            // js.executeScript("document.body.style.zoom=60%'");
+            logger.info("Upload Profile Photo ");
             addNewRaceEvent.click();
-            Thread.sleep(2000);
+            logger.info("Click add New race events");
+            Thread.sleep(3000);
              Actions actions = new Actions(driver);
              actions.moveToElement(selectTypeOfCreate).click().perform();
              Robot robot = new Robot();
@@ -174,21 +192,27 @@ public class ProfileCreation extends base {
              Thread.sleep(500);
              robot.keyPress(KeyEvent.VK_ENTER);
              robot.keyRelease(KeyEvent.VK_ENTER);
-
-        startDate.sendKeys("20/03/2025");
+             logger.info("Create events");
+             Thread.sleep(1000);
+             startDate.sendKeys(bs.getRandomStartAndEndDate(0));
+             logger.info("Enter Start date Of Create Events ");
         Thread.sleep(2000);
-        endDate.sendKeys("04/04/2025");
-        Thread.sleep(4000);
-        // String imagepath = "./src/main/java/com/flinki/Resources/Images/image.png";
-        // Thread.sleep(2000);
-        // fileUpload.sendKeys(imagepath);
+        endDate.sendKeys(bs.getRandomStartAndEndDate(120));
+        logger.info("Enter End  date Of Create Events ");
+        Thread.sleep(2000);
+        bs.scrollToElement(saveButton);
+        Thread.sleep(2000);
+        bs.uploadImage(uploadPhoto, "image.png");
+        logger.info("Upload Photo");
+        Thread.sleep(2000);
         saveButton.click();
+        logger.info("Click Save Button");
         Thread.sleep(3000);
         nextButton.click();
 
         
         Thread.sleep(4000);
-        return this;
+        
 
 
     }
@@ -226,14 +250,14 @@ public class ProfileCreation extends base {
             if (js == null) {
                 throw new RuntimeException("JavaScript Executor is not initialized properly");
             }
-            js.executeScript("document.body.style.zoom='60%'");
+            js.executeScript("document.body.style.zoom='80%'");
 
             // Click on qualification button
             if (addNewQulifi.isDisplayed()) {
                 addNewQulifi.click();
-                System.out.println(" Clicked on addNewQualifi");
+                logger.info(" Clicked on Add New Qualifiction");
             } else {
-                throw new NoSuchElementException(" addNewQulifi button not found.");
+                throw new NoSuchElementException("  Add New Qualifictioni button not found.");
             }
             Thread.sleep(4000);
 
@@ -242,9 +266,11 @@ public class ProfileCreation extends base {
 
             if (createSportsQulif != null && createSportsQulif.isDisplayed()) {
                 actions.moveToElement(createSportsQulif).click().perform();
-                System.out.println(" Moved to createSportsQulif and clicked");
+                logger.info(" Moved to createSportsQulif and clicked");
+                
             } else {
-                throw new NoSuchElementException(" createSportsQulif not found or not visible.");
+                logger.warn(" createSportsQulif not found or not visible.");
+                throw new NoSuchElementException();
             }
 
             // Use Robot class for keyboard input
@@ -259,9 +285,10 @@ public class ProfileCreation extends base {
             Thread.sleep(4000);
             if (createInstitute.isDisplayed()&& createInstitute !=null) {
                 actions.moveToElement(createInstitute).click().perform();
-                System.out.println(" Moved to createInstitute and clicked");
+                logger.info("Moved to createInstitute and clicked");
             } else {
-                throw new NoSuchElementException(" createInstitute not found.");
+                logger.warn(" createInstitute not found.");
+                throw new NoSuchElementException();
             }
 
             robot.keyPress(KeyEvent.VK_DOWN);
@@ -273,10 +300,10 @@ public class ProfileCreation extends base {
             // Enter the date
             if (date.isDisplayed()&& date!=null) {
                
-                date.sendKeys("27/02/2010");
-                System.out.println(" Entered date: 27/02/2010");
+                date.sendKeys(bs.generateRandomDOB(15, 20));
             } else {
-                throw new NoSuchElementException(" Date input field not found.");
+                logger.warn("Date input field not found.");
+                throw new NoSuchElementException();
             }
             Thread.sleep(2000);
 
@@ -288,7 +315,7 @@ public class ProfileCreation extends base {
             // Click Save and Next
             if (saveUpdateButton.isDisplayed()&& saveUpdateButton!=null) {
                 saveUpdateButton.click();
-                Thread.sleep(5000);
+                Thread.sleep(3000);
                 System.out.println(" Clicked Save Update Button");
             } else {
                 throw new NoSuchElementException(" saveUpdateButton not found.");
@@ -311,7 +338,7 @@ public class ProfileCreation extends base {
         } catch (Exception e) {
             System.err.println(" Unexpected Error: " + e.getMessage());
         }
-        Thread.sleep(4000);
+        Thread.sleep(2000);
         return this;
     }
 
@@ -339,9 +366,9 @@ public class ProfileCreation extends base {
             }
 
         } catch (NoSuchElementException e) {
-            System.err.println("🚨 Element Not Found: " + e.getMessage());
+            System.err.println(" Element Not Found: " + e.getMessage());
         } catch (Exception e) {
-            System.err.println("🚨 Unexpected Error: " + e.getMessage());
+            System.err.println(" Unexpected Error: " + e.getMessage());
         }
         Thread.sleep(4000);
         return this;
