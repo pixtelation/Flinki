@@ -5,9 +5,11 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.JavascriptExecutor;
@@ -26,17 +28,21 @@ public class BasePage {
     public WebDriverWait wait;
     public Actions actions;
     public JavascriptExecutor jsExecutor;
+    public static final Faker faker = new Faker();
 
 
       
     public BasePage(WebDriver driver)
     {
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         this.actions = new Actions(driver);
         this.jsExecutor = (JavascriptExecutor) driver;
     }
+    
+
+ //=========================================Click WebElement ==========================================
 
     public void clickElement(WebElement element)
     {
@@ -47,64 +53,72 @@ public class BasePage {
         }
 
     }
-    
+//==========================================Enter text=================================================
+
     public void enterText(WebElement element , String text)
     {
         try {
             WebElement webElement = wait.until(ExpectedConditions.elementToBeClickable(element));
-        webElement.click();  // Ensure the field is focused
-        webElement.clear();  // Try clearing the field normally
-        
-        // Double clear using JavaScript in case normal clear() fails
-        jsExecutor.executeScript("arguments[0].value = '';", webElement);
+            webElement.click(); // Ensure the field is focused
+            webElement.clear(); // Try clearing the field normally
 
-        Thread.sleep(500);  // Small delay to ensure the field is clear
-        webElement.sendKeys(text);
+            // Double clear using JavaScript in case normal clear() fails
+            jsExecutor.executeScript("arguments[0].value = '';", webElement);
+
+            Thread.sleep(500); // Small delay to ensure the field is clear
+            webElement.sendKeys(text);
         } catch (Exception e) {
             System.out.println("Unable to enter text: " + e.getMessage());
         }
     }
     
-    public String getElementText(WebElement element) {
-        try {
-            return wait.until(ExpectedConditions.visibilityOf(element)).getText();
-        } catch (Exception e) {
-            System.out.println("Unable to get text: " + e.getMessage());
-            return "";
-        }
+//============================================Get Element text in Webpage ==============================
+    
+public String getElementText(WebElement element) {
+    try {
+        return wait.until(ExpectedConditions.visibilityOf(element)).getText();
+    } catch (Exception e) {
+        System.out.println("Unable to get text: " + e.getMessage());
+        return "";
     }
+}
+    
+//===========================================Element displayed In Webpage===================================
 
-    public boolean isElementDisplayed(WebElement element) {
-        try {
-            return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
+public boolean isElementDisplayed(WebElement element) {
+    try {
+        return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
+    } catch (Exception e) {
+        return false;
     }
+}
     
     public String getPageTittle()
     {
         return driver.getTitle();
     }
 
-    public void scrollToElement(WebElement element) {
+    
+// ==========================================Scroll to Element =========================================
+public void scrollToElement(WebElement element) {
+
+    jsExecutor.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
+
+    try {
+        Thread.sleep(500); // Short delay for smooth scrolling
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+}
+    
+
+// ==========================================Method to get the current URL=========================================
+public String getCurrentURL() {
         
-    
-        jsExecutor.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
-    
-        try {
-            Thread.sleep(500); // Short delay for smooth scrolling
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    return driver.getCurrentUrl();
     }
 
-     // Method to get the current URL
-     public String getCurrentURL() {
-        return driver.getCurrentUrl();
-    }
-
-    // Method to verify if the current URL contains expected text
+// =========================================Method to verify if the current URL contains expected text========================
     public boolean verifyURLContains(String expectedText) {
         return driver.getCurrentUrl().contains(expectedText);
     }
@@ -112,96 +126,187 @@ public class BasePage {
     public Select getSelect(WebElement dropdownElement) {
         return new Select(dropdownElement);
     }
+
+
     
+    
+//================================================Random String Genarate===============================================
+public static String randomstring() {
+    String randomname = RandomStringUtils.randomAlphabetic(5);
+    return randomname;
+}
     
 
-    public static String randomstring() {
-        String randomname = RandomStringUtils.randomAlphabetic(5);
-        return randomname;
-    }
+//================================================Random Number Generate===============================================
 
-    public static String randomnumber() {
-        String randomphone = RandomStringUtils.randomNumeric(10);
-        return randomphone;
-    }
+public static String randomnumber() {
+    String randomphone = RandomStringUtils.randomNumeric(10);
+    return randomphone;
+}
     
 
-    public static String randomemail() {
-        String randomemail = RandomStringUtils.randomAlphabetic(5) + "@yopmail.com";
-        return randomemail;
-    }
     
-    public void clickRandomElement(List<WebElement> elements) {
-        if (!elements.isEmpty()) {
-            Random rand = new Random();
-            int randomIndex = rand.nextInt(elements.size());
-            WebElement randomElement = elements.get(randomIndex);
-            randomElement.click();
-        } else {
-            System.out.println("No elements found for locator: " + elements);
+//=================================================Random Email Genrate=======================================================
+
+public static String randomemail() {
+    String randomemail = RandomStringUtils.randomAlphabetic(5) + "@yopmail.com";
+    return randomemail;
+}
+    
+
+//==========================================Click random Element in List==========================================
+ 
+ public void clickRandomElement(List<WebElement> elements) {
+     if (!elements.isEmpty()) {
+         Random rand = new Random();
+         int randomIndex = rand.nextInt(elements.size());
+         WebElement randomElement = elements.get(randomIndex);
+         randomElement.click();
+     } else {
+         System.out.println("No elements found for locator: " + elements);
+     }
+
+ }
+    
+
+
+ //===============================================Scroll to Bottam==================================================
+
+public void scrollToBottom() {
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+    js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+}
+    
+
+    
+
+
+//===============================================Upload image==============================================
+
+public void uploadImage(WebElement inputElement, String fileName) {
+    try {
+        String projectPath = System.getProperty("user.dir");
+        String fullPath = projectPath + "/src/main/Resources/Images/" + fileName;
+        File file = new File(fullPath);
+
+        if (!file.exists()) {
+            System.out.println(" File not found: " + fullPath);
+            return;
         }
 
-    }
+        inputElement.sendKeys(file.getAbsolutePath());
+        Thread.sleep(2000); // Wait for upload if needed
+        System.out.println(" Image uploaded successfully: " + fileName);
 
-    public void scrollToBottom() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    } catch (Exception e) {
+        System.out.println(" Failed to upload image (" + fileName + "): " + e.getMessage());
+        e.printStackTrace();
     }
+}
     
 
+//=============================================Wait for page load==================================================
 
-
-    public void uploadImage(WebElement inputElement, String fileName) {
-        try {
-            String projectPath = System.getProperty("user.dir");
-            String fullPath = projectPath + "/src/main/Resources/Images/" + fileName;
-            File file = new File(fullPath);
-
-            if (!file.exists()) {
-                System.out.println(" File not found: " + fullPath);
-                return;
-            }
-
-            inputElement.sendKeys(file.getAbsolutePath());
-            Thread.sleep(2000); // Wait for upload if needed
-            System.out.println(" Image uploaded successfully: " + fileName);
-
-        } catch (Exception e) {
-            System.out.println(" Failed to upload image (" + fileName + "): " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-    public void waitForPageLoad() {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
-                webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState")
-                        .equals("complete"));
-    }
+public void waitForPageLoad() {
+    new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+            webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState")
+                    .equals("complete"));
+}
     
 
     
-          private static final Faker faker = new Faker();
-    
-    public static String generateRandomDOB(int minAge, int maxAge) {
-        if (minAge > maxAge) {
-            throw new IllegalArgumentException("minAge should be less than maxAge");
-        }
+//=============================================Generate random date of birth========================================
 
-        // Calculate date ranges
-        LocalDate toDate = LocalDate.now().minusYears(minAge); // youngest allowed
-        LocalDate fromDate = LocalDate.now().minusYears(maxAge); // oldest allowed
-
-        // Convert to java.util.Date
-        Date from = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date to = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        // Generate random date between from and to
-        Date randomDate = faker.date().between(from, to);
-
-        // Format to dd/MM/yyyy
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(randomDate);
+public String generateRandomDOB(int minAge, int maxAge) {
+    if (minAge > maxAge) {
+        throw new IllegalArgumentException("minAge should be less than maxAge");
     }
+
+    // Calculate date ranges
+    LocalDate toDate = LocalDate.now().minusYears(minAge); // youngest allowed
+    LocalDate fromDate = LocalDate.now().minusYears(maxAge); // oldest allowed
+
+    // Convert to java.util.Date
+    Date from = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    Date to = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+    // Generate random date between from and to
+    Date randomDate = faker.date().between(from, to);
+
+    // Format to dd/MM/yyyy
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    return formatter.format(randomDate);
+}
+
+// ===================================Date filed range Between  Start date and End Date=====================
+
+
+ // Generates a random date between two dates
+ public static LocalDate getRandomDateBetween(LocalDate start, LocalDate end) {
+     long days = ChronoUnit.DAYS.between(start, end);
+     long randomDays = ThreadLocalRandom.current().nextLong(days + 1); // inclusive
+     return start.plusDays(randomDays);
+ }
+    
+
+ public static LocalDate[] getStartAndEndDate(LocalDate minStart, LocalDate maxStart, int maxDaysBetween) {
+     LocalDate startDate = getRandomDateBetween(minStart, maxStart);
+     LocalDate maxEndDate = startDate.plusDays(maxDaysBetween);
+     LocalDate endDate = getRandomDateBetween(startDate, maxEndDate);
+     return new LocalDate[] { startDate, endDate };
+ }
+
+ public static String RandomDOB(int minAge, int maxAge) {
+     if (minAge > maxAge) {
+         throw new IllegalArgumentException("minAge should be less than maxAge");
+     }
+
+     LocalDate toDate = LocalDate.now().minusYears(minAge); // youngest allowed
+     LocalDate fromDate = LocalDate.now().minusYears(maxAge); // oldest allowed
+
+     Date from = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+     Date to = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+     Date randomDate = faker.date().between(from, to);
+
+     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+     return formatter.format(randomDate);
+ }
+  
+
+ public  String[] getRandomStartAndEndDate(int maxGapDays) {
+    // Start date: today to today + maxGapDays
+    LocalDate startMin = LocalDate.now();
+    LocalDate startMax = startMin.plusDays(maxGapDays);
+
+    // Convert to Date
+    Date fromStart = Date.from(startMin.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    Date toStart = Date.from(startMax.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+    // Generate random start date (today -> +maxGapDays)
+    Date randomStart = faker.date().between(fromStart, toStart);
+
+    // Convert start date to LocalDate to set range for end date
+    LocalDate startLocal = randomStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate endMax = startLocal.plusDays(maxGapDays);
+
+    // Convert to Date for faker
+    Date endFrom = Date.from(startLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    Date endTo = Date.from(endMax.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+    // Generate random end date (start -> start + maxGapDays)
+    Date randomEnd = faker.date().between(endFrom, endTo);
+
+    // Format dates
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    String formattedStart = formatter.format(randomStart);
+    String formattedEnd = formatter.format(randomEnd);
+
+    return new String[]{formattedStart, formattedEnd};
+}
+    
+    
+
 
 
     
