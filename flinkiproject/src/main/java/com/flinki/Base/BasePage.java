@@ -139,8 +139,8 @@ public static String randomstring() {
 
 //================================================Random Number Generate===============================================
 
-public static String randomnumber() {
-    String randomphone = RandomStringUtils.randomNumeric(10);
+public static String randomnumber(int num) {
+    String randomphone = RandomStringUtils.randomNumeric(num);
     return randomphone;
 }
     

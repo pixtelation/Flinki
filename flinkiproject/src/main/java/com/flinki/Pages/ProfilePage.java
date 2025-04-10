@@ -191,7 +191,7 @@ public ProfilePage editPersonalSportsInformation() throws AWTException, Interrup
         clickElement(editbutton);
         Thread.sleep(3000);
         scrollToElement(phoneNumber);
-        enterText(phoneNumber, randomnumber());
+        enterText(phoneNumber, randomnumber(10));
         enterText(email, randomemail());
         scrollToElement(saveButton);
         clickElement(saveButton);

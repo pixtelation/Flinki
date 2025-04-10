@@ -156,7 +156,8 @@ public class ProfileCreation extends base {
             logger.info("Select Random Country ");
             // datOfBirth.sendKeys("27/02/2010");
             Thread.sleep(1000);
-            datOfBirth.sendKeys(bs.generateRandomDOB(13, 50));
+            // datOfBirth.sendKeys(bs.generateRandomDOB(18, 50));
+            datOfBirth.sendKeys("02/01/199"+ BasePage.randomnumber(1));
             logger.info("Enter Date of Birth ");
             saveNextButton.click();
             logger.info("Enter Next Buton ");
