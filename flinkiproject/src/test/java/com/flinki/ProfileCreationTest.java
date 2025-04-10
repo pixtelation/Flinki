@@ -2,6 +2,7 @@ package com.flinki;
 
 import java.awt.AWTException;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -27,12 +28,17 @@ public void testSetup()
     profilePage = new ProfilePage(driver);
 
 }
-
-
     @Test(priority=1)
+    public void verifyAllErrorMessageInProfileCreation() throws Exception
+    {    signup.SignupWithTCfx();
+        Assert.assertTrue(profilecreation.allMandatoryFieldErrors(), "Some error messages are missing");
+    }
+
+
+    @Test(priority=2)
     public void VerifyUserCanCreateProfileCreation() throws Exception
     {
-       
+
         signup.SignupWithTCfx();
         profilecreation.CreatePersonalInformation();
         profilecreation.CreateRacesEvents();
@@ -41,7 +47,28 @@ public void testSetup()
         profilecreation.ClickplanToUpgrade();
     }
 
-    @Test(priority = 2)
+    @Test(priority = 3)
+    public void verifyAllMandatoryErrorMessageInRacesEvents() throws Exception
+    {
+        signup.SignupWithTCfx();
+        profilecreation.CreatePersonalInformation();
+        profilecreation.CreateRacesEvents();
+        Assert.assertTrue(profilecreation.allmandatoryFieldErrorInRaceEven(), "Some error messages are missing");
+    }
+
+    @Test(priority = 3)
+    public void verifyAllMandatoryErrorMesssageInSports() throws Exception
+    {
+        signup.SignupWithTCfx();
+        profilecreation.CreatePersonalInformation();
+        profilecreation.CreateRacesEvents();
+        profilecreation.CreateAddNewraceEvent();
+        Assert.assertTrue(profilecreation.allmandatoryFiledErrorInSports(), "Some error messages are missing");
+    }
+
+    
+
+    @Test(priority = 4)
     public void VerifyUserCanEditName() throws InterruptedException
     {
         signup.SignIn().clickProfile().clickEditButton();
@@ -50,7 +77,7 @@ public void testSetup()
 
     }
     
-    @Test(priority = 3)
+    @Test(priority = 5)
     public void VerifyUserCanEditSports() throws InterruptedException, AWTException
     {
         signup.SignIn().clickProfile();
@@ -58,13 +85,14 @@ public void testSetup()
 
     }
 
-    @Test(priority = 4)
+    @Test(priority = 6)
     public void VerifyUsercanEditContactDetails() throws InterruptedException
     {
         signup.SignIn().clickProfile();
         profilePage.EditContactDetails();
 
     }
+
     
     
     

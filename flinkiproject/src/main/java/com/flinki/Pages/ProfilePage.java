@@ -8,14 +8,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.flinki.Base.BasePage;
+import com.flinki.utils.Log;
 import com.github.javafaker.Faker;
 
 public class ProfilePage extends BasePage {
+     private static final Logger logger = Log.getLogger(ProfilePage.class); 
      Faker faker = new Faker();
 
     public ProfilePage(WebDriver driver) {
