@@ -1,5 +1,6 @@
 package com.flinki.Pages;
 
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,9 +12,11 @@ import com.flinki.Base.base;
 import com.flinki.Base.configReader;
 import com.flinki.utils.Data;
 import com.flinki.utils.ExcelUtils;
+import com.flinki.utils.Log;
 
 
-public class SignUp extends base{
+public class SignUp extends base {
+     private static final Logger logger = Log.getLogger(SignUp.class); 
 
     //public String Image = ".\src\main\java\com\flinki\Resources\Images\image.png";
 

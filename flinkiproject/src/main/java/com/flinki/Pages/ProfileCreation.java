@@ -61,10 +61,37 @@ public class ProfileCreation extends base {
     
         @FindBy(xpath = "//button[normalize-space()='Next']")
         private WebElement nextButton;
+
+        @FindBy(xpath = "//div[contains(text(),'First name is required')]")
+        private WebElement firstNameError;
+
+        @FindBy(xpath = "//div[contains(text(),'Last name is required')]")
+        private WebElement lastNameError;
+
+        @FindBy(xpath = "//div[contains(text(),'Country is required')]")
+        private WebElement countryError;
+
+        @FindBy(xpath = "//div[contains(text(),'Nationality is required')]")
+        private WebElement nationalityError;
+
+        @FindBy(xpath = "//div[contains(text(),'Date of Birth is required')]")
+        private WebElement dobError;
     
         @FindBy(xpath = "//button[normalize-space()='Add New Race/Event']")
         private WebElement addNewRaceEvent;
-    
+
+        @FindBy(xpath = "//div[contains(text(),'Race/Event name is required')]")
+        private WebElement raceEventError;
+        @FindBy(xpath = "//div[contains(text(),'Start date is required')]")
+        private WebElement startDateError;
+        @FindBy(xpath = "//div[contains(text(),'End date is required')]")
+        private WebElement enddateError;
+        @FindBy(xpath = "//div[contains(text(),'Sports qualification is required')]")
+        private WebElement sportsError;
+        @FindBy(xpath = "//div[contains(text(),'Institution is required')]")
+        private WebElement instituteError;
+        @FindBy(xpath = "//div[contains(text(),'Date is required')]")
+        private WebElement sportsDateError;
         @FindBy(xpath = "//div[@class='css-19bb58m']")
         private WebElement typeOfCreate;
     
@@ -345,7 +372,6 @@ public class ProfileCreation extends base {
     public ProfileCreation ClickplanToUpgrade() throws InterruptedException {
         try {
 
-
             //div[@class='jsx-faece91221e6c5e6 popup-actions']
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].scrollBy(0, 200);", popUpScroll);
@@ -373,6 +399,79 @@ public class ProfileCreation extends base {
         Thread.sleep(4000);
         return this;
     }
+    
+//=================================Perosnal Information All mandatrory field error message is verify=========================
+    public boolean allMandatoryFieldErrors() {
+        saveNextButton.click();
+        logger.info("Click on Save Next Button ");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+
+        }
+
+        boolean allErrorsVisible = firstNameError.isDisplayed() &&
+                lastNameError.isDisplayed() &&
+                countryError.isDisplayed() &&
+                nationalityError.isDisplayed() &&
+                dobError.isDisplayed();
+
+        if (!allErrorsVisible) {
+            logger.error("One or more error messages not displayed properly.");
+        } else {
+            logger.info("All mandatory field error messages are displayed.");
+        }
+
+        return allErrorsVisible;
+    }
+
+//===============================================All Error Message is Verifyed in Race Event Page 
+public boolean allmandatoryFieldErrorInRaceEven() throws InterruptedException
+    
+{
+    addNewRaceEvent.click();
+    Thread.sleep(2000);
+    bs.scrollToElement(saveButton);
+    Thread.sleep(2000);
+    saveButton.click();
+    Thread.sleep(2000);
+    bs.scrollToElement(raceEventError);
+    logger.info("Click on Save Next Button ");
+    Thread.sleep(2000);
+    boolean allerrorMessage = raceEventError.isDisplayed() &&
+            startDateError.isDisplayed()
+            && enddateError.isDisplayed();
+    if (!allerrorMessage) {
+        logger.error("One or more error messages not displayed properly.");
+
+    } else {
+        logger.info("All mandatory field error messages are displayed.");
+
+    }
+
+    return allerrorMessage;
+}
+
+public boolean allmandatoryFiledErrorInSports() throws InterruptedException
+{
+    addNewQulifi.click();
+    Thread.sleep(2000);
+    bs.scrollToElement(saveUpdateButton);
+    Thread.sleep(2000);
+    saveUpdateButton.click();
+    bs.scrollToElement(sportsDateError);
+    boolean allerrorMessage = sportsError.isDisplayed() && instituteError.isDisplayed()
+            && sportsDateError.isDisplayed();
+            if(!allerrorMessage)
+            {
+                logger.info("One or more error messages not displayed properly");
+            } else {
+                logger.info("All mandatory field error messages are displayed.");
+
+            }
+            return allerrorMessage;
 
 
+}
+    
 }

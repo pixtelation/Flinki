@@ -1,13 +1,14 @@
 package com.flinki;
 
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.flinki.Base.base;
 import com.flinki.Pages.SignUp;
 
 
-
+@Listeners(TestListener.class)
 public class SignUpTest extends base{
 
 

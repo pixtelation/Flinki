@@ -1,12 +1,13 @@
 package com.flinki;
 import java.awt.AWTException;
 
-import org.testng.annotations.*;
-
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 
 import com.flinki.Base.base;
 import com.flinki.Pages.LandingPage;
 
+@Listeners(TestListener.class)
 public class LandingTest extends base
 {   
     
