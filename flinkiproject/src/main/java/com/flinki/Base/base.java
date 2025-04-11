@@ -45,12 +45,12 @@ public class base {
     }
 
 
-    // @AfterMethod
-    // public void tearDown() {
-    //     if (driver != null) {
-    //         driver.quit();
-    //     }
-    // }
+    @AfterMethod
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
 
    

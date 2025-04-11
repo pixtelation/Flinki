@@ -1,6 +1,9 @@
 package com.flinki.Pages;
 
+import java.util.List;
+
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,6 +45,8 @@ public class Homepage extends BasePage {
     @FindBy(xpath = "//button[normalize-space()='Continue']")
     private WebElement signOutContinueButton;
 
+    @FindBy(xpath = "//div[@class='listing-card']")
+    private List<WebElement> productList;
 
     public ProfilePage clickProfile()
     {
@@ -80,9 +85,11 @@ public class Homepage extends BasePage {
         clickElement(myGroupClubs);
     }
 
-    public void clickMyRaceEventCalender()
+    public MyRaceEventCalender clickMyRaceEventCalender()
     {
         clickElement(myRaceEventCalender);
+        logger.info("Click My Race/Events calender");
+        return new MyRaceEventCalender(driver);
     }
 
     public void clickMyListing()
@@ -93,12 +100,34 @@ public class Homepage extends BasePage {
     public SignIn signOut()
     {
         clickElement(username);
+        logger.info("Click  Profile Link");
         clickElement(signOutButton);
+        logger.info("Clicked SignOut Button");
         clickElement(signOutContinueButton);
+        logger.info("Clicked Continue Button");
         return new SignIn(driver);
 
     }
 
+    public void printProductListAndPrice()
+    {
+        for (WebElement card : productList) {
+            try {
+
+                String name = card.findElement(By.tagName("h5")).getText();
+                String price = card.findElement(By.tagName("p")).getText();
+                System.out.println("Product Name: " + name + " | Price: " + price);
+
+                
+            } catch (Exception e) {
+                System.out.println("Element not found in this card. Skipping...");
+            }
+            
+        }
+    }
+
+
+    
 
     
 

@@ -1,5 +1,8 @@
 package com.flinki.Base;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -274,37 +277,48 @@ public String generateRandomDOB(int minAge, int maxAge) {
  }
   
 
- public  String[] getRandomStartAndEndDate(int maxGapDays) {
-    // Start date: today to today + maxGapDays
-    LocalDate startMin = LocalDate.now();
-    LocalDate startMax = startMin.plusDays(maxGapDays);
+ public String[] getRandomStartAndEndDate(int maxGapDays) {
+     // Start date: today to today + maxGapDays
+     LocalDate startMin = LocalDate.now();
+     LocalDate startMax = startMin.plusDays(maxGapDays);
 
-    // Convert to Date
-    Date fromStart = Date.from(startMin.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    Date toStart = Date.from(startMax.atStartOfDay(ZoneId.systemDefault()).toInstant());
+     // Convert to Date
+     Date fromStart = Date.from(startMin.atStartOfDay(ZoneId.systemDefault()).toInstant());
+     Date toStart = Date.from(startMax.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-    // Generate random start date (today -> +maxGapDays)
-    Date randomStart = faker.date().between(fromStart, toStart);
+     // Generate random start date (today -> +maxGapDays)
+     Date randomStart = faker.date().between(fromStart, toStart);
 
-    // Convert start date to LocalDate to set range for end date
-    LocalDate startLocal = randomStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    LocalDate endMax = startLocal.plusDays(maxGapDays);
+     // Convert start date to LocalDate to set range for end date
+     LocalDate startLocal = randomStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+     LocalDate endMax = startLocal.plusDays(maxGapDays);
 
-    // Convert to Date for faker
-    Date endFrom = Date.from(startLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    Date endTo = Date.from(endMax.atStartOfDay(ZoneId.systemDefault()).toInstant());
+     // Convert to Date for faker
+     Date endFrom = Date.from(startLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+     Date endTo = Date.from(endMax.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-    // Generate random end date (start -> start + maxGapDays)
-    Date randomEnd = faker.date().between(endFrom, endTo);
+     // Generate random end date (start -> start + maxGapDays)
+     Date randomEnd = faker.date().between(endFrom, endTo);
 
-    // Format dates
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    String formattedStart = formatter.format(randomStart);
-    String formattedEnd = formatter.format(randomEnd);
+     // Format dates
+     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+     String formattedStart = formatter.format(randomStart);
+     String formattedEnd = formatter.format(randomEnd);
 
-    return new String[]{formattedStart, formattedEnd};
+     return new String[] { formattedStart, formattedEnd };
+ }
+// =======================Select DropDwon using Keyboard =======================
+ public void selectDropdownUsingKeyboard(WebElement dropdownElement) throws AWTException {
+    Actions actions = new Actions(driver);
+    actions.moveToElement(dropdownElement).click().perform();
+
+    Robot robot = new Robot();
+    robot.keyPress(KeyEvent.VK_DOWN);
+    robot.keyRelease(KeyEvent.VK_DOWN);
+
+    robot.keyPress(KeyEvent.VK_ENTER);
+    robot.keyRelease(KeyEvent.VK_ENTER);
 }
-    
     
 
 
