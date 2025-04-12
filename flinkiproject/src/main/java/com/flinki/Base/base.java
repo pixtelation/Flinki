@@ -27,9 +27,9 @@ public class base {
 
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("debuggerAddress", "localhost:64379");
+        // options.setExperimentalOption("debuggerAddress", "localhost:64379");
         driver = new ChromeDriver(options);
-        // driver.get("https://sportsxcl-cms.weavers-web.com/");
+        driver.get("https://sportsxcl-cms.weavers-web.com/");
         driver.manage().window().maximize();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("document.body.style.zoom='60%'");
