@@ -39,8 +39,6 @@ jobs:
 
     - name: Build Project with Maven
       run: mvn clean install
-      working-directory: Flinki
 
     - name: Run TestNG Tests
       run: mvn test
-      working-directory: Flinki
