@@ -1,7 +1,7 @@
-**/target/
+/target/
 
-**/screenshots/
+/screenshots/
 
-**/logs/
+/logs/
 
-**/src/main/Resources/String.xlsx
+/src/main/Resources/String.xlsx
