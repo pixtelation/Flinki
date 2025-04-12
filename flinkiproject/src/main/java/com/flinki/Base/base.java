@@ -25,19 +25,11 @@ public class base {
     public void Start()
     {
 
-        //ChromeOptions options = new ChromeOptions();
-        // options.addArguments("user-data-dir=C:/Users/wadmin/AppData/Local/Google/Chrome/User Data");
-        // options.addArguments("profile-directory=Default"); // Change if using a different profile
-        // WebDriverManager.chromedriver().setup();
-        // driver = new ChromeDriver();
-        // driver.manage().window().maximize();
-        // driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        // driver.get("https://sportsxcl-cms.weavers-web.com/");
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        //options.setExperimentalOption("debuggerAddress", "localhost:46443");
+        options.setExperimentalOption("debuggerAddress", "localhost:64379");
         driver = new ChromeDriver(options);
-        driver.get("https://sportsxcl-cms.weavers-web.com/");
+        // driver.get("https://sportsxcl-cms.weavers-web.com/");
         driver.manage().window().maximize();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("document.body.style.zoom='60%'");
