@@ -154,10 +154,35 @@ public class ProfileCreation extends base {
             int randomIndex = rand.nextInt(optionsCountry.size() - 1) + 1; // Avoid index 0 if it's a placeholder
             selectcountry.selectByIndex(randomIndex);
             logger.info("Select Random Country ");
-            // datOfBirth.sendKeys("27/02/2010");
-            Thread.sleep(1000);
-            // datOfBirth.sendKeys(bs.generateRandomDOB(18, 50));
-            datOfBirth.sendKeys("02/01/199"+ BasePage.randomnumber(1));
+            Thread.sleep(3000);
+
+            // try {
+            //     datOfBirth.sendKeys("2010/02/22");
+            //     Thread.sleep(3000);
+                
+                
+            // } catch (Exception e) {
+
+            // }
+            // datOfBirth.sendKeys("2010/02/22");
+            // //  datOfBirth.sendKeys(bs.generateRandomDOB(18, 50));
+
+            try {
+
+                datOfBirth.sendKeys("199" + BasePage.randomnumber(1)+"-01-20");
+                Robot robot = new Robot();
+                robot.keyPress(KeyEvent.VK_ENTER);
+                robot.keyRelease(KeyEvent.VK_ENTER);
+                  
+                
+            } catch (Exception e) {
+                System.out.println("date Of birth is required " + e.getMessage());
+               
+            }
+           
+
+
+
             logger.info("Enter Date of Birth ");
             saveNextButton.click();
             logger.info("Enter Next Buton ");

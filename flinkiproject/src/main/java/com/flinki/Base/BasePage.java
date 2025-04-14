@@ -237,7 +237,7 @@ public String generateRandomDOB(int minAge, int maxAge) {
     Date randomDate = faker.date().between(from, to);
 
     // Format to dd/MM/yyyy
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
     return formatter.format(randomDate);
 }
 
@@ -272,7 +272,7 @@ public String generateRandomDOB(int minAge, int maxAge) {
 
      Date randomDate = faker.date().between(from, to);
 
-     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
      return formatter.format(randomDate);
  }
   
@@ -301,7 +301,7 @@ public String generateRandomDOB(int minAge, int maxAge) {
      Date randomEnd = faker.date().between(endFrom, endTo);
 
      // Format dates
-     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
      String formattedStart = formatter.format(randomStart);
      String formattedEnd = formatter.format(randomEnd);
 

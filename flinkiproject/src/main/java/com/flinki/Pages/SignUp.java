@@ -122,7 +122,7 @@ public class SignUp extends base {
         SignupEmailEl.sendKeys(configReader.getProperty("email"));
         SignupTCCheckbox.click();
         SignUpbtn.click();
-        Thread.sleep(4000);
+        Thread.sleep(3000);
 
         WebElement enterOtp = driver
                 .findElement(By.xpath("//HTML[contains(@lang,'en')]/BODY/DIV[2]/DIV/DIV[2]/DIV/DIV/DIV[2]/DIV/INPUT"));
