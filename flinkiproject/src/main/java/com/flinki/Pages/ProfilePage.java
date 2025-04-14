@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.logging.log4j.Logger;
@@ -69,6 +70,18 @@ public class ProfilePage extends BasePage {
 
     @FindBy(xpath = "//input[@placeholder='Email']")
     private WebElement email;
+
+    @FindBy(xpath = "//div[@class='sportstable-wrapper']//button[@class='three-dots-button']")
+    private List<WebElement> threeDotButton;;
+
+    @FindBy(xpath = "//button[normalize-space()='Delete']")
+    private WebElement deleteButton;
+
+    @FindBy(xpath = "//button[@class='dropdown-item'][normalize-space()='Edit']")
+    private WebElement edit;
+
+    @FindBy(xpath = "//button[normalize-space()='Yes']")
+    private WebElement yesButton;
 
     // @FindBy(xpath = "//button[normalize-space()='Save']")
     // private WebElement saveButton;
@@ -227,6 +240,94 @@ public ProfilePage editPersonalSportsInformation() throws AWTException, Interrup
     public void profileImageUpload()
     {
         uploadImage(profilePhoto, "Profile.jpg");
+    }
+
+    public void deleteSportsQulifications()
+    {
+        scrollToElement(addNewSportsQulify);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.println("Element is not fount" + e.getMessage());
+        }
+        for (WebElement webElement : threeDotButton) {
+
+            try {
+                clickElement(webElement);
+                Thread.sleep(1000);
+                clickElement(deleteButton);
+                clickElement(yesButton);
+
+            } catch (Exception e) {
+                System.out.println("Element is not fount" + e.getMessage());
+
+            }
+
+        }
+    }
+    
+    public void addNewSports() throws AWTException, InterruptedException
+    {
+        scrollToElement(addNewSportsQulify);
+        Thread.sleep(2000);
+        clickElement(addNewSportsQulify);
+        if (createSports != null && createSports.isDisplayed()) {
+            actions.moveToElement(createSports).click().perform();
+            System.out.println(" Moved to createSportsQulif and clicked");
+        } else {
+            throw new NoSuchElementException(" createSportsQulif not found or not visible.");
+        }
+
+        // Use Robot class for keyboard input
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_DOWN);
+        robot.keyRelease(KeyEvent.VK_DOWN);
+        robot.keyPress(KeyEvent.VK_DOWN);
+        robot.keyRelease(KeyEvent.VK_DOWN);
+        Thread.sleep(500);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+
+        // Move to another element
+        Thread.sleep(4000);
+
+        if (createInstitue.isDisplayed()&& createInstitue !=null) {
+            actions.moveToElement(createInstitue).click().perform();
+            System.out.println(" Moved to createInstitute and clicked");
+        } else {
+            throw new NoSuchElementException(" createInstitute not found.");
+        }
+
+        robot.keyPress(KeyEvent.VK_DOWN);
+        robot.keyRelease(KeyEvent.VK_DOWN);
+        robot.keyPress(KeyEvent.VK_DOWN);
+        robot.keyRelease(KeyEvent.VK_DOWN);
+        robot.keyPress(KeyEvent.VK_DOWN);
+        robot.keyRelease(KeyEvent.VK_DOWN);
+        Thread.sleep(2000);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+        Thread.sleep(2000);
+        // Enter the date
+        if (date.isDisplayed()&& date!=null) {
+           
+            date.sendKeys("27/02/2010");
+            System.out.println(" Entered date: 27/02/2010");
+        } else {
+            throw new NoSuchElementException(" Date input field not found.");
+        }
+        Thread.sleep(2000);
+
+        if (about.isDisplayed() && about != null)
+        {
+            about.clear();
+            about.sendKeys("Lorem  Lorem");
+        }
+        scrollToElement(saveUpdateButton);
+        clickElement(saveUpdateButton);
+        Thread.sleep(2000);
+
+
     }
 
     
