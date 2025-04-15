@@ -11,12 +11,15 @@ import com.flinki.Base.base;
 import com.flinki.Pages.ProfileCreation;
 import com.flinki.Pages.ProfilePage;
 import com.flinki.Pages.SignUp;
+import com.flinki.utils.Data;
+import com.flinki.utils.ExcelUtils;
 
 @Listeners(TestListener.class)
 public class ProfileCreationTest extends base {
     private SignUp signup;
     private ProfileCreation profilecreation;
     private ProfilePage profilePage;
+   
     
     
 
@@ -26,12 +29,13 @@ public void testSetup()
     signup = new SignUp(driver);
     profilecreation = new ProfileCreation(driver);
     profilePage = new ProfilePage(driver);
-
+   
 }
     @Test(priority=1)
     public void verifyAllErrorMessageInProfileCreation() throws Exception
     {    signup.SignupWithTCfx();
         Assert.assertTrue(profilecreation.allMandatoryFieldErrors(), "Some error messages are missing");
+       
     }
 
 
@@ -45,6 +49,8 @@ public void testSetup()
         profilecreation.CreateAddNewraceEvent();
         profilecreation.CreateAddNewQulifiactions();
         profilecreation.ClickplanToUpgrade();
+        ExcelUtils.writeToCell("flinkiproject/src/main/Resources/String.xlsx", "TestData", 1, 0, Data.getRandomEmail());
+
     }
 
     @Test(priority = 3)

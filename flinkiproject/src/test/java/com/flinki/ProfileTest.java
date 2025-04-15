@@ -29,7 +29,7 @@ public void testSetup()
 }
 
 
-@Test(priority = 1)
+@Test(priority = 1,groups="Functional")
     public void VerifyUserCanEditName() throws InterruptedException
     {
         signup.SignIn().clickProfile().clickEditButton();
@@ -38,7 +38,7 @@ public void testSetup()
 
     }
     
-    @Test(priority = 2)
+    @Test(priority = 2,groups="Functional")
     public void VerifyUserCanEditSports() throws InterruptedException
     {
         signup.SignIn().clickProfile();
@@ -49,7 +49,7 @@ public void testSetup()
 
     }
 
-    @Test(priority = 3)
+    @Test(priority = 3,groups="Functional")
     public void VerifyUsercanEditContactDetails() throws InterruptedException
     {
         signup.SignIn().clickProfile();
@@ -57,7 +57,7 @@ public void testSetup()
 
     }
 
-    @Test(priority=4)
+    @Test(priority=4,groups="Functional")
     public void VerifyUploadCoverPhoto() throws InterruptedException
     
     {
@@ -69,16 +69,39 @@ public void testSetup()
     
     }
 
-    @Test(priority = 5)
+    @Test(priority = 5,groups="Functional")
     public void VerifyUploadProfilePhoto() throws InterruptedException
     {
         signup.SignIn().clickProfile();
         profilePage.profileImageUpload();
         Thread.sleep(3000);
-     
-
 
     }
+
+    @Test(priority=6,groups="Functional")
+    public void verifyUserCanAddSports() throws InterruptedException, AWTException
+    {
+
+        signup.SignIn().clickProfile();
+        Thread.sleep(3000);
+        profilePage.addNewSports();
+    }
+
+
+
+    
+    @Test(dependsOnMethods="verifyUserCanAddSports")
+    public void verifyUserCanDeleteSports() throws InterruptedException
+    {
+
+        signup.SignIn().clickProfile();
+        Thread.sleep(3000);
+        profilePage.deleteSportsQulifications();
+    }
+
+    
+
+
     
     
     
