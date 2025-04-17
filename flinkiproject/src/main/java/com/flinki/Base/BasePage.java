@@ -15,7 +15,9 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -50,6 +52,7 @@ public class BasePage {
     public void clickElement(WebElement element)
     {
         try {
+            wait.until(ExpectedConditions.visibilityOf(element));
             wait.until(ExpectedConditions.elementToBeClickable(element)).click();
         } catch (Exception e) {
             System.out.println("Element not clickable: " + e.getMessage());
@@ -321,6 +324,35 @@ public String generateRandomDOB(int minAge, int maxAge) {
 }
     
 
+
+public void acceptAlert() {
+    try {
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        System.out.println("Alert Text: " + alert.getText());
+        alert.accept();
+    } catch (NoAlertPresentException e) {
+        System.out.println("No alert found: " + e.getMessage());
+    }
+}
+
+public void dismissAlert() {
+    try {
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.dismiss();
+    } catch (NoAlertPresentException e) {
+        System.out.println("No alert found: " + e.getMessage());
+    }
+}
+
+public void sendTextToAlert(String text) {
+    try {
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.sendKeys(text);
+        alert.accept();
+    } catch (NoAlertPresentException e) {
+        System.out.println("No alert found: " + e.getMessage());
+    }
+}
 
 
     

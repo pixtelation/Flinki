@@ -6,14 +6,17 @@
     <listener class-name="com.flinki.TestListener"/>
   </listeners>
 
-
-  <test thread-count="1" name="AllTests">
+  <test thread-count="1" name="FunctionalTests">
+    <groups>
+      <run>
+        <include name="Functional"/>
+      </run>
+    </groups>
+    
     <classes>
-      <!-- <class name="flinki.LandingTest"/> -->
       <class name="flinki.ProfileCreationTest"/>
-      <!-- <class name="flinki.ProfileTest"/>
-      <class name="flinki.SignInTest"/>
-      <class name="flinki.SignUpTest"/> -->
+      <class name="flinki.ProfileTest"/>
+      <!-- Add other classes if they also have Functional group tests -->
     </classes>
   </test>
 </suite>
