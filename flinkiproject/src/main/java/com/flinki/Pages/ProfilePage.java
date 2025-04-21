@@ -49,7 +49,7 @@ public class ProfilePage extends BasePage {
     @FindBy(xpath = "//h2[contains(text(), 'User save successfully')]")
     private WebElement userSaveSucessfully;
 
-    @FindBy(xpath = "//button[normalize-space()='Add New Sports Qualifications']")
+    @FindBy(xpath = "(//button[@class='add-new-race-btn'])[2]")
     private WebElement addNewSportsQulify;
 
     @FindBy(xpath = "(//div[@class='css-hlgwow'])[1]")
@@ -129,7 +129,7 @@ public ProfilePage editPersonalNameInformation() throws InterruptedException
 }
     //Edit personal sports information in profile section 
 public ProfilePage editPersonalSportsInformation() throws AWTException, InterruptedException
-{
+{   Thread.sleep(2000);
     scrollToElement(addNewSportsQulify);
     clickElement(addNewSportsQulify);
     if (createSports != null && createSports.isDisplayed()) {
