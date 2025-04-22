@@ -34,7 +34,10 @@ public class Homepage extends BasePage {
     private WebElement myRaceEventCalender;
     @FindBy(xpath = "//a[normalize-space()='My Listings']")
     private WebElement myListing;
-
+    @FindBy(xpath = "//button[normalize-space()='Photos/Videos']")
+    private WebElement photosVideos;
+    @FindBy(xpath = "//button[normalize-space()='Event']")
+    private WebElement event;
 
     @FindBy(xpath = "//button[@class='profile-button']")
     private WebElement username;
@@ -110,6 +113,7 @@ public class Homepage extends BasePage {
     }
 
     public void printProductListAndPrice()
+
     {
         for (WebElement card : productList) {
             try {
@@ -126,7 +130,11 @@ public class Homepage extends BasePage {
         }
     }
 
-
+    public MyRaceEventCalender clickEvent()
+    {
+        clickElement(event);
+        return new MyRaceEventCalender(driver);
+    }
     
 
     

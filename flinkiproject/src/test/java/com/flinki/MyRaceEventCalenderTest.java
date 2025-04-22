@@ -1,5 +1,7 @@
 package com.flinki;
 
+import java.awt.AWTException;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -28,7 +30,7 @@ public class MyRaceEventCalenderTest extends base {
     }
 
     @Test(priority=1, groups = "Functional")
-    public void userCanAbleToCreateNewEvents() throws InterruptedException
+    public void userCanAbleToCreateNewEvents() throws InterruptedException, AWTException
     {
         signup.SignIn();
         homepage.clickMyRaceEventCalender();
@@ -37,6 +39,12 @@ public class MyRaceEventCalenderTest extends base {
         myRaceEvent.uploadCoverPhoto("dodgeCoverPhoto.jpg");
         myRaceEvent.uploadProfilePhoto("Profile.jpg");
         myRaceEvent.getSelectVisliblity().enterEventName().chouseSports();
+        myRaceEvent.subType();
+        Thread.sleep(4000);
+        myRaceEvent.chouseTimeZone();
+        Thread.sleep(4000);
+      
+        
 
 
 

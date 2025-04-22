@@ -29,11 +29,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.github.javafaker.Faker;
 
 public class BasePage {
-     public  WebDriver driver;
+    public  WebDriver driver;
     public WebDriverWait wait;
     public Actions actions;
     public JavascriptExecutor jsExecutor;
     public static final Faker faker = new Faker();
+    public Robot robot;
 
 
       
@@ -56,7 +57,7 @@ public class BasePage {
             wait.until(ExpectedConditions.elementToBeClickable(element)).click();
         } catch (Exception e) {
             System.out.println("Element not clickable: " + e.getMessage());
-        }
+        }   
 
     }
 //==========================================Enter text=================================================
