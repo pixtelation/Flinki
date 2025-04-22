@@ -95,9 +95,9 @@ public class ProfileCreation extends base {
         @FindBy(xpath = "//div[@class='css-19bb58m']")
         private WebElement typeOfCreate;
     
-        @FindBy(xpath = "//input[@placeholder='Start date']")
+        @FindBy(name="startDate")
         private WebElement startDate;
-        @FindBy(xpath = "//input[@placeholder='End date']")
+        @FindBy(name = "endDate")
         private WebElement endDate;
     
         @FindBy(xpath = "//input[@name='myfile']")
@@ -246,11 +246,15 @@ public class ProfileCreation extends base {
              robot.keyPress(KeyEvent.VK_ENTER);
              robot.keyRelease(KeyEvent.VK_ENTER);
              logger.info("Create events");
-             Thread.sleep(1000);
-             startDate.sendKeys(bs.getRandomStartAndEndDate(0));
+             Thread.sleep(3000);
+             startDate.sendKeys("2025" + "-04-1" + BasePage.randomnumber(1));
+                robot.keyPress(KeyEvent.VK_ENTER);
+                robot.keyRelease(KeyEvent.VK_ENTER);
              logger.info("Enter Start date Of Create Events ");
         Thread.sleep(2000);
-        endDate.sendKeys(bs.getRandomStartAndEndDate(120));
+        endDate.sendKeys("2025" + "-04-2" + BasePage.randomnumber(1));
+                robot.keyPress(KeyEvent.VK_ENTER);
+                robot.keyRelease(KeyEvent.VK_ENTER);
         logger.info("Enter End  date Of Create Events ");
         Thread.sleep(2000);
         bs.scrollToElement(saveButton);

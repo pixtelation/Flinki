@@ -1,13 +1,18 @@
 package com.flinki.Pages;
 
 import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.security.Key;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.flinki.Base.BasePage;
@@ -32,9 +37,9 @@ public class  MyRaceEventCalender extends BasePage {
     private WebElement eventName;
     @FindBy(xpath = "//div[@class='select__value-container css-hlgwow']")
     private WebElement sportName;
-    @FindBy(xpath="//div[@class='css-19bb58m']/parent::div")
+    @FindBy(xpath="//input[@id='react-select-3-input']")
     private WebElement typeOfCreate;
-    @FindBy(xpath="//select[@name='timezone']")
+    @FindBy(xpath="//div[@class='select__control css-4b6fdp-control']//div[@class='select__value-container select__value-container--has-value css-hlgwow']")
     private WebElement selectTimezone;
     @FindBy(xpath = "//input[@placeholder='Start date*']")
     private WebElement startDate;
@@ -156,7 +161,30 @@ public MyRaceEventCalender chouseSports()
 
     }
     return this;
-            
+
+}
+    public void subType() throws AWTException, InterruptedException
+    {
+        scrollToElement(typeOfCreate);
+        clickElement(typeOfCreate);
+        enterText(typeOfCreate, randomstring());
+        typeOfCreate.sendKeys(Keys.ENTER);
+
+    }
+   
+    public MyRaceEventCalender chouseTimeZone() throws InterruptedException 
+    {
+        try {
+    
+    selectDropdownUsingKeyboard(selectTimezone);
+    logger.info("Select Sport Sucesfulluy ");
+} catch (AWTException e) {
+    logger.warn("Unable to use Keyboard Action ");
+
+}
+   
+    return this;
+
 }
 
 }
